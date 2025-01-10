@@ -28,9 +28,9 @@ class CustomDataset(Dataset):
         label = self.labels[idx]
         
         image = Image.open(image_path).convert("RGB")
-        model_config = create_model(self.model_name, pretrained=True).default_cfg
+        model_config = create_model(self.model_name, pretrained=False).default_cfg
         image = image.resize(model_config['input_size'][1:], Image.BILINEAR)
-        image = np.array(image) / 255.0  # Scale to [0, 1]
+        image = np.array(image) / 255.0 
         mean = np.array(model_config['mean']).reshape(1, 1, 3)
         std = np.array(model_config['std']).reshape(1, 1, 3)
         image = (image - mean) / std

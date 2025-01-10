@@ -12,7 +12,7 @@ from utils import plot_train_val_losses, compute_smoothgrad, save_model
 from config import NUM_CLASSES
 
 def main():
-    image_path = '../CUB_200_2011/CUB_200_2011/images'
+    image_path = 'data'
     model_name = "resnet50"
     num_classes = NUM_CLASSES
     

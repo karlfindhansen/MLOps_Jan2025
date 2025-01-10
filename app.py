@@ -52,7 +52,7 @@ def main():
         probabilities = torch.nn.functional.softmax(output, dim=1)
         top5_probabilities, top5_classes = torch.topk(probabilities, 5)
 
-        class_names = os.listdir('../CUB_200_2011/CUB_200_2011/images')[:num_classes]
+        class_names = os.listdir('data')[:num_classes]
         class_names = [name[4:].replace("_", " ") for name in class_names]
 
         top5_classes = top5_classes.cpu().numpy().flatten()
