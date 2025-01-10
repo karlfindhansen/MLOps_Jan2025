@@ -12,7 +12,7 @@ from utils import plot_train_val_losses, compute_smoothgrad, save_model
 from config import NUM_CLASSES
 
 def main():
-    image_path = 'data'
+    image_path = '../data'
     model_name = "resnet50"
     num_classes = NUM_CLASSES
     
@@ -38,7 +38,7 @@ def main():
     test(model, test_dataloader, device)
 
     plot_train_val_losses(train_losses, val_losses)
-    save_model(model, "model.pth")
+    save_model(model, "../model.pth")
 
 if __name__ == "__main__":
     main()

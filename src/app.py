@@ -40,7 +40,7 @@ def main():
 
         model_name = "resnet50"  
         num_classes = NUM_CLASSES  
-        model = load_model("model.pth", model_name, num_classes)  
+        model = load_model("../model.pth", model_name, num_classes)  
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         input_tensor = input_tensor.to(device)
         model = model.to(device)
@@ -52,7 +52,7 @@ def main():
         probabilities = torch.nn.functional.softmax(output, dim=1)
         top5_probabilities, top5_classes = torch.topk(probabilities, 5)
 
-        class_names = os.listdir('data')[:num_classes]
+        class_names = os.listdir('../data')[:num_classes]
         class_names = [name[4:].replace("_", " ") for name in class_names]
 
         top5_classes = top5_classes.cpu().numpy().flatten()
