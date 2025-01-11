@@ -1,4 +1,3 @@
-import os
 from torch.utils.data import DataLoader, random_split
 from torch.optim import Adam
 from torch import nn
