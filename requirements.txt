@@ -5,3 +5,4 @@ numpy==1.26.4
 matplotlib==3.9.2
 tqdm==4.66.5
 loguru==0.7.3
+wandb==0.19.3
