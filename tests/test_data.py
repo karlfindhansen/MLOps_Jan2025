@@ -2,7 +2,7 @@ import torch
 import os
 
 def test_data():
-    data_path = os.path.abspath(os.path.join(data_path, os.pardir, "data"))
+    data_path = 'data'
     assert os.path.exists(data_path), f"Data path {data_path} does not exist"
     assert len(os.listdir(data_path)) == 2, f"Data path {data_path} does not contain 2 folders"
     for folder in os.listdir(data_path):
