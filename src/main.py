@@ -2,7 +2,7 @@ from torch.utils.data import DataLoader, random_split
 from torch.optim import Adam
 from torch import nn
 import torch
-
+from app_logger import log_application_start_end
 from datasets import CustomDataset
 from model import get_model
 from train import train
@@ -15,6 +15,8 @@ def main():
     model_name = "resnet50"
     num_classes = NUM_CLASSES
     
+    log_application_start_end(image_path, model_name, num_classes) # log events in the main function
+
     dataset = CustomDataset(image_path, model_name, num_classes)
     
     train_size = int(0.7 * len(dataset))
