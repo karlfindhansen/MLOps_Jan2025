@@ -1,3 +1,12 @@
 __pycache__/
 model.pth
-data/
+data/001.Black_footed_Albatross
+data/002.Laysan_Albatross
+data/003.Sooty_Albetross
+data/004.Groove_billed_Ani
+data/005.Crested_Auklet
+data/006.Least_Auklet
+data/007.Parakeet_Auklet
+data/008.Rhinoceros_Auklet
+data/009.Brewer_Blackbird
+data/010.Red_winged_Blackbird
