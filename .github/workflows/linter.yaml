@@ -1,0 +1,31 @@
+name: Lint and Format Code
+
+on:
+  push:
+    branches:
+      - javier
+  pull_request:
+    branches:
+      - javier
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install Ruff
+      run: pip install ruff
+
+    - name: Lint Code
+      run: ruff check .
+
+    - name: Format Check (Optional)
+      run: |
+        ruff check . --fix-only --diff
