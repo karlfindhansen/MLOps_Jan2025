@@ -6,6 +6,7 @@ import numpy as np
 from config import NUM_CLASSES
 import os
 import matplotlib.pyplot as plt
+from explainability import compute_gradcam, overlay_gradcam_on_image
 
 def preprocess_image(image_path, input_size, mean, std):
     image = Image.open(image_path).convert("RGB")
@@ -38,8 +39,8 @@ def main():
         std = [0.229, 0.224, 0.225]
         input_tensor = preprocess_image(uploaded_file, input_size, mean, std)
 
-        model_name = "resnet50"  
-        num_classes = NUM_CLASSES  
+        model_name = "resnet50"
+        num_classes = 5 # TBM
         model = load_model("../model.pth", model_name, num_classes)  
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         input_tensor = input_tensor.to(device)
@@ -71,6 +72,12 @@ def main():
         ax.set_title('Top 5 Predictions')
 
         st.pyplot(fig)
+
+        # Compute Grad-CAM for the top predicted class
+        gradcam = compute_gradcam(model, input_tensor, top5_classes[0])
+        gradcam_overlay = overlay_gradcam_on_image(image, gradcam)
+
+        st.image(gradcam_overlay, caption="Grad-CAM Overlay", use_container_width=True)
 
 if __name__ == "__main__":
     main()
