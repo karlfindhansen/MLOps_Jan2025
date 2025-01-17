@@ -23,5 +23,5 @@ jobs:
     - name: Install Ruff
       run: pip install ruff
 
-    - name: Lint Code
-      run: ruff check . --fix-only --diff
+    - name: Apply Formatting and Fix Issues
+      run: ruff check . --fix
