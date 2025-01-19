@@ -1,0 +1,61 @@
+defaults:
+  - common
+
+logdir: null  # null correspond to default hydra config
+train: True
+evaluate: True
+upload_model: True
+
+model:
+  _target_: "src.model.CustomClassifier"  # Update this with your actual model's Python path
+  backbone: "resnet50"                              # Backbone model name
+  num_classes: 5                                    # Number of output classes (matches CustomDataset)
+  pretrained: False                                 # Whether to use a pretrained backbone
+  learning_rate: 1e-3   # Learning rate
+  optimizer: "adam"     # Optimizer type ('adam' or 'sgd')
+  artifact_name: "custom_model"
+
+datamodule:
+  _target_: "src.datasets.CustomDataset"
+  image_dir: "/home/jyanes/MLOps_Jan2025/data"  # Path to the dataset directory
+  model_name: "resnet50"             # Name of the model (used for preprocessing)
+  num_classes: 5                     # Number of classes to include
+  val_split: 0.15               # Validation split ratio
+  batch_size: 32               # Batch size for DataLoader
+  num_workers: 4               # Number of workers for DataLoader
+  pin_memory: true             # Pin memory for DataLoader
+
+experiment_logger:
+  _target_: "pytorch_lightning.loggers.WandbLogger"
+  project: "MLOps"
+  entity: "javieryanespul-danmarks-tekniske-universitet"
+  job_type: "train"
+  save_code: True
+
+callbacks:
+  early_stopping:
+    _target_: "pytorch_lightning.callbacks.EarlyStopping"
+    monitor: "val_loss"
+    mode: "min"
+    patience: 5
+    verbose: True
+  checkpoint:
+    _target_: "pytorch_lightning.callbacks.ModelCheckpoint"
+    monitor: "val_loss"
+    mode: "min"
+    save_last: True
+    save_top_k: 3
+    dirpath: "checkpoints"
+    filename: "{epoch:02d}-{val_loss:.2f}"
+  learning_rate_monitor:
+    _target_: "pytorch_lightning.callbacks.LearningRateMonitor"
+    logging_interval: "epoch"
+  progress_bar:
+    _target_: "pytorch_lightning.callbacks.RichProgressBar"
+
+trainer:
+  accelerator: "auto"
+  max_epochs: 10
+  gradient_clip_val: 0.0
+  deterministic: true
+  log_every_n_steps: 20
