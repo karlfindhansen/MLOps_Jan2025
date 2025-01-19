@@ -23,5 +23,7 @@ jobs:
     - name: Install Ruff
       run: pip install ruff
 
-    - name: Apply Formatting and Fix Issues
-      run: ruff check . --fix
+    - name: Ruff check
+        run: ruff check .
+    - name: Ruff format
+      run: ruff format .
