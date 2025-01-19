@@ -5,7 +5,7 @@ def example_function ( ):
   print( "Hello world!" )  # Improper spacing and missing docstring
   x = 42 # Unused variable
 
-  for i in range (5 ): print( i+1)  # Improper spacing, single-line for loop
+  for i in range (5 ): print( i+ 1)  # Improper spacing, single-line for loop
 
 # Another function to test long lines and lack of formatting
 def another_example(): print("This is an intentionally long line to check if the linter catches and formats it properly because it exceeds the recommended line length")
