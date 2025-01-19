@@ -3,10 +3,10 @@ name: Lint and Format Code
 on:
   push:
     branches:
-      - javier
+      - main
   pull_request:
     branches:
-      - javier
+      - main
 
 jobs:
   lint:
@@ -26,6 +26,3 @@ jobs:
     - name: Ruff check
       run: ruff check .
       continue-on-error: true
-      
-    - name: Ruff format
-      run: ruff format .
