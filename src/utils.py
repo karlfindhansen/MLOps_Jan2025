@@ -18,13 +18,13 @@ def compute_smoothgrad(images, labels, model, criterion, n_samples=10, noise_lev
     for _ in tqdm(range(n_samples)):
         noisy_images = images + noise_level * torch.randn_like(images).to(device)  # Add Gaussian noise
         noisy_images.requires_grad = True
-        
+
         output = model(noisy_images)
         loss = criterion(output, labels)
         loss.backward()
-        
+
         smoothgrad += noisy_images.grad.abs()  # Accumulate the absolute gradients
-    
+
     smoothgrad /= n_samples  # Average the gradients
     smoothgrad = smoothgrad.max(dim=1)[0]  # Take the maximum across color channels
     return smoothgrad
