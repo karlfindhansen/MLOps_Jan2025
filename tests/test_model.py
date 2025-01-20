@@ -6,7 +6,7 @@ from torch.utils.data import DataLoader, TensorDataset
 import torchmetrics
 
 
-@pytest.mark.parametrize("batch_size", [8, 16])
+@pytest.mark.parametrize("batch_size", [4, 8])
 @pytest.mark.parametrize("backbone", ["resnet18", "resnet50"])
 def test_custom_classifier_forward(batch_size: int, backbone: str) -> None:
     num_classes = 10
@@ -21,7 +21,7 @@ def test_custom_classifier_forward(batch_size: int, backbone: str) -> None:
     assert output.shape == (batch_size, num_classes), f"Output shape mismatch for backbone {backbone}."
 
 
-@pytest.mark.parametrize("batch_size", [8, 16])
+@pytest.mark.parametrize("batch_size", [4, 8])
 def test_custom_classifier_training_step(batch_size: int) -> None:
     model = CustomClassifier(
         backbone="resnet50", num_classes=10, pretrained=False
@@ -34,7 +34,7 @@ def test_custom_classifier_training_step(batch_size: int) -> None:
     train_dataloader = DataLoader(train_dataset, batch_size=batch_size, num_workers=3, persistent_workers=True)
 
     val_dataset = TensorDataset(dummy_inputs, dummy_targets)
-    val_dataloader = DataLoader(val_dataset, batch_size=batch_size, num_workers=7, persistent_workers=True)
+    val_dataloader = DataLoader(val_dataset, batch_size=batch_size, num_workers=3, persistent_workers=True)
 
     trainer = Trainer(fast_dev_run=True)
 
