@@ -34,6 +34,7 @@ jobs:
       if: runner.os == 'macOS'
       run: |
         echo "PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.0" >> $GITHUB_ENV
+        echo "CUDA_VISIBLE_DEVICES=" >> $GITHUB_ENV
 
     - name: Test with pytest
       run: |
