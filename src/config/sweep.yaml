@@ -1,0 +1,21 @@
+program: src/train_int.py  # Path to the training script
+command:
+  - ${env}
+  - python3
+  - ${program}
+  - ${args_no_hyphens}
+method: bayes  # Search strategy: grid, random, or bayesian optimization
+metric:
+  name: val_loss  # Metric to optimize
+  goal: minimize  # Whether to minimize or maximize the metric
+parameters:
+  model.backbone:
+    values: ["resnet18", "resnet34", "resnet50"]  # Options for backbones
+  model.learning_rate:
+    distribution: log_uniform  # Log-uniform distribution for learning rate
+    min: 1e-5
+    max: 1e-2
+  datamodule.batch_size:
+    values: [16, 32, 64]  # Options for batch sizes
+  trainer.max_epochs:
+    values: [1, 2]  # Options for the number of epochs
