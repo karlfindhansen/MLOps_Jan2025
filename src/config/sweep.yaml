@@ -1,4 +1,4 @@
-program: src/train_int.py  # Path to the training script
+program: src/train.py  # Path to the training script
 command:
   - ${env}
   - python3
