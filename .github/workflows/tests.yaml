@@ -30,12 +30,6 @@ jobs:
         pip install -r requirements.txt
         pip install -r requirements_tests.txt
 
-    - name: Set environment variable to avoid MPS memory issues (macOS only)
-      if: runner.os == 'macOS'
-      run: |
-        echo "PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.0" >> $GITHUB_ENV
-        echo "CUDA_VISIBLE_DEVICES=" >> $GITHUB_ENV
-
     - name: Test with pytest
       run: |
         pytest -v
