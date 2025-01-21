@@ -20,3 +20,5 @@ figures/
 src/lightning_logs
 src/outputs/
 outputs/
+.ckpt
+/data
