@@ -25,10 +25,10 @@ def test_data():
     # verify the local data path exists
     assert os.path.exists(data_path), f"Data path {data_path} does not exist locally after pulling"
 
-    # Step 3: Check if the directory contains subfolders or files
+    # check if the directory contains subfolders or files
     assert len(os.listdir(data_path)) > 0, f"Data path {data_path} is empty after pulling"
 
-    # Step 4: Verify each subfolder is non-empty
+    # verify each subfolder is non-empty
     for folder in os.listdir(data_path):
         folder_path = os.path.join(data_path, folder)
         assert os.path.isdir(folder_path), f"{folder_path} is not a directory"
