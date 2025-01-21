@@ -30,8 +30,8 @@ jobs:
         pip install -r requirements.txt
         pip install -r requirements_tests.txt
 
+    # Step to install Google Cloud SDK
     - name: Install Google Cloud SDK
-      if: runner.os == 'Ubuntu'
       run: |
         echo "Installing Google Cloud SDK..."
         curl https://sdk.cloud.google.com | bash
@@ -39,7 +39,7 @@ jobs:
 
     - name: Authenticate with Google Cloud
       run: |
-        echo "${{ secrets.GCLOUD_SERVICE_KEY }}" > $HOME/gcloud-key.json
+        echo "${{ secrets.GCLOUD_SERVICE_KEY }}" | base64 --decode > $HOME/gcloud-key.json
         gcloud auth activate-service-account --key-file=$HOME/gcloud-key.json
         gcloud config set project keen-defender-448412-p6
       env:
