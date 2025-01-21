@@ -10,3 +10,13 @@ data/007.Parakeet_Auklet
 data/008.Rhinoceros_Auklet
 data/009.Brewer_Blackbird
 data/010.Red_winged_Blackbird
+data/
+requirements.txt
+.env
+.png
+src/wandb/
+checkpoints/
+figures/
+src/lightning_logs
+src/outputs/
+outputs/
