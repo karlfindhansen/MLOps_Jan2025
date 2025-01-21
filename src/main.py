@@ -39,23 +39,23 @@ def main(cfg : DictConfig) -> None:
     log_application_start_end(image_path, model_name, num_classes) # log events in the main function
 
     dataset = CustomDataset(image_path, model_name, num_classes)
-    
+
     train_size = int(0.7 * len(dataset))
     val_size = int(0.15 * len(dataset))
     test_size = len(dataset) - train_size - val_size
     train_dataset, val_dataset, test_dataset = random_split(dataset, [train_size, val_size, test_size])
-    
+
     train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
     val_dataloader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False)
     test_dataloader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
-    
+
     model = get_model(model_name, num_classes, pretrained=False)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model = model.to(device)
-    
+
     criterion = nn.CrossEntropyLoss()
     optimizer = Adam(model.parameters(), lr=l_r, weight_decay=weight_decay)
-    
+
     train_losses, val_losses = train(model, train_dataloader, val_dataloader, criterion, optimizer, device, num_epochs=n_epochs)
     test(model, test_dataloader, device)
 
