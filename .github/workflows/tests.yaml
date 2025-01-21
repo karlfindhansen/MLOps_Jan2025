@@ -30,6 +30,13 @@ jobs:
         pip install -r requirements.txt
         pip install -r requirements_tests.txt
 
+    - name: Install Google Cloud SDK
+      if: runner.os == 'Ubuntu'
+      run: |
+        echo "Installing Google Cloud SDK..."
+        curl https://sdk.cloud.google.com | bash
+        source $HOME/google-cloud-sdk/path.bash.inc
+
     - name: Authenticate with Google Cloud
       run: |
         echo "${{ secrets.GCLOUD_SERVICE_KEY }}" > $HOME/gcloud-key.json
@@ -37,7 +44,6 @@ jobs:
         gcloud config set project keen-defender-448412-p6
       env:
         GOOGLE_APPLICATION_CREDENTIALS: $HOME/gcloud-key.json
-
 
     - name: Test with pytest
       run: |
