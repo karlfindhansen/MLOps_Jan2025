@@ -116,9 +116,9 @@ will check the repositories and the code to verify your answers.
 ### Question 1
 > **Enter the group number you signed up on <learn.inside.dtu.dk>**
 >
-> Answer: 23
+> Answer:
 
---- question 1 fill here ---
+23
 
 ### Question 2
 > **Enter the study number for each member in the group**
@@ -127,9 +127,9 @@ will check the repositories and the code to verify your answers.
 >
 > *sXXXXXX, sXXXXXX, sXXXXXX*
 >
-> Answer: s193624, s204748, s243345, s204674, s205336
+> Answer:
 
---- question 2 fill here ---
+s193624, s204748, s243345, s204674, s205336
 
 ### Question 3
 > **A requirement to the project is that you include a third-party package not covered in the course. What framework**
@@ -143,7 +143,7 @@ will check the repositories and the code to verify your answers.
 >
 > Answer:
 
---- question 3 fill here ---
+We used the third-party framework `timm` in our project. The `create_model` function from this package allowed us to load a pretrained ResNet50 backbone, which we fine-tuned on our dataset for bird classification. Using a pretrained model helped us save time while improving performance, as the model had already learned features from a large dataset, providing a stronger starting point than training from scratch. This popular framework made it easy to work with state-of-the-art models like the one we chose and adapt it to our specific needs, greatly simplifying the process of setting up the model architecture.
 
 ## Coding environment
 
