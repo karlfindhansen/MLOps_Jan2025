@@ -143,7 +143,7 @@ def preprocess_data(image_dir: str, num_classes: int, batch_size: int = 64, down
 
 def main(image_dir: str = '../data', num_classes: int = 200, batch_size: int = 64, download: bool = False) -> None:
     """Main function to preprocess and save dataset."""
-    preprocess_data(image_dir='../data', num_classes=num_classes, batch_size=batch_size, download=download)
+    preprocess_data(image_dir='/workspace/data', num_classes=num_classes, batch_size=batch_size, download=download)
 
 
 if __name__ == '__main__':

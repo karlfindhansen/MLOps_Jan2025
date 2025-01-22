@@ -13,7 +13,7 @@ steps:
   entrypoint: 'sh'
   args:
     - '-c'
-    - 'ls -l && ls -l data'
+    - 'ls -l && ls -l /workspace/data'
 
 - name: 'gcr.io/cloud-builders/docker'
   id: 'Build Container Image'
