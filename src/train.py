@@ -10,7 +10,7 @@ import wandb
 from hydra_loggers import HydraRichLogger, get_hydra_dir_and_job_name
 
 from model import CustomClassifier
-from datasets import CustomDataModule
+from datasets import CUB200_201
 
 dotenv.load_dotenv()
 logger = HydraRichLogger(level=os.getenv("LOG_LEVEL", "INFO"))
@@ -34,14 +34,11 @@ def train_model(cfg: DictConfig) -> None:
         learning_rate=cfg.model.learning_rate,
         optimizer=cfg.model.optimizer,
     )
-    datamodule = CustomDataModule(
+    datamodule = CUB200_201(
         image_dir=cfg.datamodule.image_dir,
         model_name=cfg.datamodule.model_name,
         num_classes=cfg.datamodule.num_classes,
-        val_split=cfg.datamodule.val_split,
-        batch_size=cfg.datamodule.batch_size,
-        num_workers=cfg.datamodule.num_workers,
-        pin_memory=cfg.datamodule.pin_memory,
+        download=True,
     )
 
     # Instantiate logger and callbacks
