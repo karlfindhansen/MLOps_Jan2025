@@ -1,115 +1,150 @@
 import os
-from PIL import Image
-import numpy as np
+import shutil
+from collections.abc import Callable
+from pathlib import Path
+from typing import Optional
+
 import torch
-from torch.utils.data import Dataset
-from timm import create_model
-from torch.utils.data import DataLoader, random_split
-from pytorch_lightning import LightningDataModule
+from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms
+from PIL import Image
+from pytorch_lightning import LightningDataModule
+from timm import create_model
 from dataclasses import dataclass
-from hydra_loggers import HydraRichLogger, show_image_and_target
+from fastai.vision.all import *
 
-logger = HydraRichLogger(level=os.getenv("LOG_LEVEL", "INFO"))
 
-class CustomDataset(Dataset):
-    def __init__(self, image_dir, model_name, num_classes):
+class CUB200_201(Dataset):
+    """Custom Dataset class for CUB-200-2011 dataset."""
+
+    def __init__(
+        self,
+        image_dir: Path | str,
+        model_name: str,
+        num_classes: int,
+        transform: Optional[Callable] = None,
+        download: bool = False,
+    ) -> None:
+        """Initialize dataset."""
+        self.image_dir = Path('../data')
+        self.model_name = model_name
+        self.num_classes = num_classes
+        self.transform = transform or transforms.Compose([
+            transforms.Resize((224, 224)),
+            transforms.ToTensor(),
+        ])
+
+        if download:
+            self._download()
+
+        # Prepare image paths and labels
         self.image_paths = []
         self.labels = []
-        self.folders = os.listdir(image_dir)[:num_classes]
+        self.folders = [folder for folder in os.listdir('../data') if os.path.isdir(os.path.join('../data', folder))][:num_classes]
 
         for idx, folder in enumerate(self.folders):
-            folder_path = os.path.join(image_dir, folder)
+            folder_path = os.path.join('../data', folder)
             images = os.listdir(folder_path)
             for image in images:
-                self.image_paths.append(os.path.join(folder_path, image))
-                self.labels.append(idx)
+                image_path = os.path.join(folder_path, image)
+                if os.path.isfile(image_path):  # Check if it's a file (not a sub-folder)
+                    self.image_paths.append(image_path)
+                    self.labels.append(idx)
 
-        self.model_name = model_name
+        # Load model configuration
+        model_config = create_model(self.model_name, pretrained=False).default_cfg
+        self.input_size = model_config["input_size"][1:]
+        self.mean = model_config["mean"]
+        self.std = model_config["std"]
 
-    def __len__(self):
+    def __len__(self) -> int:
+        """Length of dataset."""
         return len(self.image_paths)
 
-    def __getitem__(self, idx):
+    def __getitem__(self, idx: int):
+        """Get item from dataset."""
         image_path = self.image_paths[idx]
         label = self.labels[idx]
 
         image = Image.open(image_path).convert("RGB")
-        model_config = create_model(self.model_name, pretrained=False).default_cfg
-        image = image.resize(model_config["input_size"][1:], Image.BILINEAR)
-        image = np.array(image) / 255.0
-        mean = np.array(model_config["mean"]).reshape(1, 1, 3)
-        std = np.array(model_config["std"]).reshape(1, 1, 3)
-        image = (image - mean) / std
-        image = torch.tensor(image.transpose(2, 0, 1), dtype=torch.float32)
+        image = self.transform(image)
         return image, label
 
+    def _download(self):
+        """Download and prepare the CUB-200-2011 dataset."""
+        data_path = '../data'
+        if os.path.exists(data_path):
+            shutil.rmtree(data_path)
+
+        # Download and extract dataset
+        default_path = untar_data(URLs.CUB_200_2011)
+        shutil.move(default_path, data_path)
+
+        # Define the DataBlock
+        cub_data = DataBlock(
+            blocks=(ImageBlock, CategoryBlock),
+            get_items=get_image_files,
+            splitter=RandomSplitter(valid_pct=0.2, seed=42),
+            get_y=parent_label,
+            item_tfms=Resize(460),
+            batch_tfms=aug_transforms(size=224, min_scale=0.75)
+        )
+
+        dls = cub_data.dataloaders(data_path, bs=64)
+
+        torch.save(dls.train, os.path.join(data_path, 'train_dataloader.pth'))
+        torch.save(dls.valid, os.path.join(data_path, 'valid_dataloader.pth'))
+
+
 @dataclass
-class CustomDataModule(LightningDataModule):
-    """Data module for the CustomDataset."""
+class CUB200201DataModule(LightningDataModule):
+    """Data module for the Custom CUB200_201 Dataset."""
+
     image_dir: str
     model_name: str
     num_classes: int
-    val_split: float = 0.15
-    batch_size: int = 32
-    num_workers: int = 0
-    pin_memory: bool = True
+    batch_size: int = 64
+    download: bool = False
 
-    def __post_init__(self):
-        """Initialize the data module."""
-        super().__init__()
-        self.train_dataset = None
-        self.val_dataset = None
-        self.test_dataset = None
-
-    def setup(self, stage: str) -> None:
-        """Set up datasets for different stages."""
-        if stage in ("fit", "validate"):
-            full_dataset = CustomDataset(
-                image_dir=self.image_dir,
-                model_name=self.model_name,
-                num_classes=self.num_classes,
-            )
-            n_total = len(full_dataset)
-            n_val = int(n_total * self.val_split)
-            n_train = n_total - n_val
-            self.train_dataset, self.val_dataset = random_split(
-                full_dataset, [n_train, n_val]
-            )
-
-        if stage == "test":
-            self.test_dataset = CustomDataset(
-                image_dir=self.image_dir,
-                model_name=self.model_name,
-                num_classes=self.num_classes,
-            )
+    def setup(self, stage: Optional[str] = None) -> None:
+        """Setup datasets."""
+        self.dataset = CUB200_201('../data', self.model_name, self.num_classes, download=self.download)
 
     def train_dataloader(self) -> DataLoader:
         """Return train dataloader."""
-        return DataLoader(
-            self.train_dataset,
-            batch_size=self.batch_size,
-            shuffle=True,
-            num_workers=self.num_workers,
-            pin_memory=self.pin_memory,
-        )
+        if not hasattr(self, 'dataset'):
+            self.setup()
+        return DataLoader(self.dataset, batch_size=self.batch_size, shuffle=True)
 
     def val_dataloader(self) -> DataLoader:
         """Return validation dataloader."""
-        return DataLoader(
-            self.val_dataset,
-            batch_size=self.batch_size,
-            shuffle=False,
-            num_workers=self.num_workers,
-            pin_memory=self.pin_memory,
-        )
+        if not hasattr(self, 'dataset'):
+            self.setup()
+        return DataLoader(self.dataset, batch_size=self.batch_size, shuffle=False)
 
-    def test_dataloader(self) -> DataLoader:
-        """Return test dataloader."""
-        return DataLoader(
-            self.test_dataset,
-            batch_size=self.batch_size,
-            shuffle=False,
-            num_workers=self.num_workers,
-            pin_memory=self.pin_memory,
-        )
+
+def preprocess_data(image_dir: str, num_classes: int, batch_size: int = 64, download: bool = False) -> None:
+    """Preprocess and prepare data for training."""
+    # Setup data module
+    data_module = CUB200201DataModule(
+        image_dir='../data',
+        model_name="resnet50",
+        num_classes=num_classes,
+        batch_size=batch_size,
+        download=download
+    )
+
+    # Call setup method to initialize the dataset before using dataloaders
+    data_module.setup()
+
+    torch.save(data_module.train_dataloader(), os.path.join('../data', 'train_dataloader.pth'))
+    torch.save(data_module.val_dataloader(), os.path.join('../data', 'valid_dataloader.pth'))
+
+
+def main(image_dir: str = '../data', num_classes: int = 200, batch_size: int = 64, download: bool = False) -> None:
+    """Main function to preprocess and save dataset."""
+    preprocess_data(image_dir='../data', num_classes=num_classes, batch_size=batch_size, download=download)
+
+
+if __name__ == '__main__':
+    main(download=True)
