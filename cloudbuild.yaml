@@ -1,4 +1,11 @@
 steps:
+
+- name: 'python:3.11-slim'
+  id: 'Generate Data'
+  entrypoint: 'python'
+  args:
+    - 'src/datasets.py'
+
 - name: 'gcr.io/cloud-builders/docker'
   id: 'Build Container Image'
   args:
