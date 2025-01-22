@@ -17,7 +17,7 @@ model:
 
 datamodule:
   _target_: "src.datasets.CustomDataset"
-  image_dir: "/home/jyanes/MLOps_Jan2025/data"  # Path to the dataset directory
+  image_dir: "MLOps_Jan2025/data"  # Path to the dataset directory
   model_name: "resnet50"             # Name of the model (used for preprocessing)
   num_classes: 5                     # Number of classes to include
   val_split: 0.15               # Validation split ratio
@@ -25,10 +25,17 @@ datamodule:
   num_workers: 4               # Number of workers for DataLoader
   pin_memory: true             # Pin memory for DataLoader
 
+#experiment_logger:
+#  _target_: "pytorch_lightning.loggers.WandbLogger"
+#  project: "MLOps"
+#  entity: "javieryanespul-danmarks-tekniske-universitet"
+#  job_type: "train"
+#  save_code: True
+
 experiment_logger:
   _target_: "pytorch_lightning.loggers.WandbLogger"
-  project: "MLOps"
-  entity: "javieryanespul-danmarks-tekniske-universitet"
+  project: "mlops-jan-2025"
+  entity: "sterlie-technical-university-of-denmark"
   job_type: "train"
   save_code: True
 

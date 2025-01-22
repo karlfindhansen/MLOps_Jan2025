@@ -163,6 +163,20 @@ We used the third-party framework `timm` in our project. The `create_model` func
 >
 > Answer:
 
+For python dependencies we use two key files: 
+- **requirements.txt**: This file lists the promary dependencies required for the application to run. 
+- **requirements_tests.txt**: This file includes additional dependencies for testing. 
+
+We use Docker to manage dependencies for our APIs. Each API has it's own dockerfile, that specifies the neccesary base image, dependencies, and configurations to setup the runtime enviroment. 
+
+To get a copy of the developments enviroment, you would: 
+* Cloone the repository. 
+* Build and run the docker container. 
+* Or alternativly, to run the setup locally; set up a virtual enviroment, activate it anf insdtall the dependencies. 
+
+By using this appraoch, we manage to ensure consistency and reproducibility. 
+
+
 --- question 4 fill here ---
 
 ### Question 5

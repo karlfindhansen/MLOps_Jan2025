@@ -2,3 +2,7 @@
     remote = gcsremote
 ['remote "gcsremote"']
     url = gs://bird-classification-data/
+['remote "dataremote"']
+    url = gs://bird-classification-data/
+['remote "modelremote"']
+    url = gs://bird-calssifier-model/
