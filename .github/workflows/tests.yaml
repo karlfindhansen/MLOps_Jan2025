@@ -30,13 +30,24 @@ jobs:
         pip install -r requirements.txt
         pip install -r requirements_tests.txt
 
-    - name: Authenticate with Google Cloud
-      run: |
-        echo "${{ secrets.GCLOUD_SERVICE_KEY }}" > $HOME/gcloud-key.json
-        gcloud auth activate-service-account --key-file=$HOME/gcloud-key.json
-        gcloud config set project keen-defender-448412-p6
-      env:
-        GOOGLE_APPLICATION_CREDENTIALS: $HOME/gcloud-key.json
+      # Install Google Cloud SDK
+  - name: Install Google Cloud SDK
+    run: |
+      echo "Installing Google Cloud SDK"
+      sudo apt-get update
+      sudo apt-get install -y apt-transport-https ca-certificates gnupg
+      echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+      sudo apt-get install -y curl
+      curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo tee /usr/share/keyrings/cloud.google.gpg
+      sudo apt-get update && sudo apt-get install -y google-cloud-sdk
+
+  - name: Authenticate with Google Cloud
+    run: |
+      echo "${{ secrets.GCLOUD_SERVICE_KEY }}" > $HOME/gcloud-key.json
+      gcloud auth activate-service-account --key-file=$HOME/gcloud-key.json
+      gcloud config set project keen-defender-448412-p6
+    env:
+      GOOGLE_APPLICATION_CREDENTIALS: $HOME/gcloud-key.json
 
 
     - name: Test with pytest
