@@ -9,6 +9,9 @@ RUN apt update && \
 COPY requirements.txt requirements.txt
 COPY pyproject.toml pyproject.toml
 COPY src/ src/
+
+RUN python src/datasets.py
+
 COPY data/ data/
 
 WORKDIR /
