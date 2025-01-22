@@ -8,6 +8,13 @@ steps:
       pip install --no-cache-dir torch torchvision timm pytorch-lightning fastai
       python src/datasets.py
 
+- name: 'alpine'
+  id: 'Verify Data'
+  entrypoint: 'sh'
+  args:
+    - '-c'
+    - 'ls -l && ls -l data'
+
 - name: 'gcr.io/cloud-builders/docker'
   id: 'Build Container Image'
   args:
