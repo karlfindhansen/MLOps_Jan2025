@@ -26,28 +26,10 @@ steps:
     - '.'
 
 - name: 'gcr.io/cloud-builders/docker'
-  id: 'Build Container Image 2'
-  args: [
-    'build',
-    '.',
-    '-t',
-    'europe-west1-docker.pkg.dev/$PROJECT_ID/proj-artifacts/api',
-    '-f',
-    './dockerfiles/api.dockerfile'
-  ]
-
-- name: 'gcr.io/cloud-builders/docker'
   id: 'Push Container Image'
   args:
     - 'push'
     - 'gcr.io/$PROJECT_ID/bird-train:latest'
-
-- name: 'gcr.io/cloud-builders/docker'
-  id: 'Push container image 2'
-  args: [
-    'push',
-    'europe-west1-docker.pkg.dev/$PROJECT_ID/proj-artifacts/api'
-  ]
 
 images:
 - 'gcr.io/$PROJECT_ID/bird-train:latest'
