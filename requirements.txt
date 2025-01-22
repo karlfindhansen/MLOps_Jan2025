@@ -9,3 +9,4 @@ pytorch-lightning==2.3.0
 dvc[gs]
 fastai==2.7.18
 fastapi==0.115.6
+httpx==0.28.1
