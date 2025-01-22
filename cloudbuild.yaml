@@ -31,9 +31,5 @@ steps:
     - 'push'
     - 'gcr.io/$PROJECT_ID/bird-train:latest'
 
-images:
-- 'gcr.io/$PROJECT_ID/bird-train:latest'
-- 'europe-west1-docker.pkg.dev/$PROJECT_ID/proj-artifacts/train:latest'
-
 options:
   logging: CLOUD_LOGGING_ONLY
