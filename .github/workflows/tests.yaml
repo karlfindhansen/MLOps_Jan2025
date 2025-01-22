@@ -30,15 +30,6 @@ jobs:
         pip install -r requirements.txt
         pip install -r requirements_tests.txt
 
-    # - name: Authenticate with Google Cloud
-    #   run: |
-    #     echo "${{ secrets.GCLOUD_SERVICE_KEY }}" > $HOME/gcloud-key.json
-    #     gcloud auth activate-service-account --key-file=$HOME/gcloud-key.json
-    #     gcloud config set project keen-defender-448412-p6
-    #   env:
-    #     GOOGLE_APPLICATION_CREDENTIALS: $HOME/gcloud-key.json
-
-
     - name: Test with pytest
       run: |
         pytest -v
