@@ -31,5 +31,8 @@ steps:
     - 'push'
     - 'gcr.io/$PROJECT_ID/bird-train:latest'
 
+images:
+- 'gcr.io/$PROJECT_ID/bird-train:latest'
+
 options:
   logging: CLOUD_LOGGING_ONLY
