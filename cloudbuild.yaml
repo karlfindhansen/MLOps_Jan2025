@@ -1,4 +1,13 @@
 steps:
+- name: 'python:3.11-slim'
+  id: 'Generate Data'
+  entrypoint: 'sh'
+  args:
+    - '-c'
+    - |
+      pip install --no-cache-dir torch torchvision timm pytorch-lightning fastai
+      python src/datasets.py
+
 - name: 'gcr.io/cloud-builders/docker'
   id: 'Build Container Image'
   args:
