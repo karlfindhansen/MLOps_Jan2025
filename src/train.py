@@ -3,6 +3,7 @@ import shutil
 
 import dotenv
 import hydra
+import torch
 import pytorch_lightning as pl
 from omegaconf import DictConfig, OmegaConf
 
@@ -52,12 +53,23 @@ def train_model(cfg: DictConfig) -> None:
 
     # Instantiate trainer
     logger.info("Setting up trainer")
-    trainer = pl.Trainer(
-        default_root_dir=logdir,
-        logger=experiment_logger,
-        callbacks=[checkpoint_callback, early_stopping_callback, learning_rate_callback, progress_bar_callback],
-        **cfg.trainer,
-    )
+    if torch.cuda.device_count() > 1:
+        trainer = pl.Trainer(
+            default_root_dir=logdir,
+            logger=experiment_logger,
+            callbacks=[checkpoint_callback, early_stopping_callback, learning_rate_callback, progress_bar_callback],
+            strategy="ddp",
+            accelerator="gpu",
+            devices=torch.cuda.device_count(),
+            **cfg.trainer,
+        )
+    else:
+        trainer = pl.Trainer(
+            default_root_dir=logdir,
+            logger=experiment_logger,
+            callbacks=[checkpoint_callback, early_stopping_callback, learning_rate_callback, progress_bar_callback],
+            **cfg.trainer,
+        )
 
     if cfg.train:
         logger.info("Starting training")

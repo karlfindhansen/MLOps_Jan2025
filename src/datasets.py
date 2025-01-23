@@ -12,6 +12,7 @@ from pytorch_lightning import LightningDataModule
 from timm import create_model
 from dataclasses import dataclass
 from fastai.vision.all import *
+from torch.utils.data.distributed import DistributedSampler
 
 
 class CUB200_201(Dataset):
@@ -114,13 +115,27 @@ class CUB200201DataModule(LightningDataModule):
         """Return train dataloader."""
         if not hasattr(self, 'dataset'):
             self.setup()
-        return DataLoader(self.dataset, batch_size=self.batch_size, shuffle=True)
+        sampler = DistributedSampler(self.dataset) if torch.distributed.is_initialized() else None
+        return DataLoader(
+            self.dataset,
+            batch_size=self.batch_size,
+            shuffle=(sampler is None),
+            sampler=sampler,
+            num_workers=os.cpu_count()
+        )
 
     def val_dataloader(self) -> DataLoader:
         """Return validation dataloader."""
         if not hasattr(self, 'dataset'):
             self.setup()
-        return DataLoader(self.dataset, batch_size=self.batch_size, shuffle=False)
+        sampler = DistributedSampler(self.dataset) if torch.distributed.is_initialized() else None
+        return DataLoader(
+            self.dataset,
+            batch_size=self.batch_size,
+            shuffle=False,
+            sampler=sampler,
+            num_workers=os.cpu_count()
+        )
 
 
 def preprocess_data(image_dir: str, num_classes: int, batch_size: int = 64, download: bool = False) -> None:
