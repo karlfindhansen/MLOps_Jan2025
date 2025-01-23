@@ -1,0 +1,139 @@
+2025-01-20 11:01:11 INFO Running runs: []
+2025-01-20 11:01:11 INFO Agent received command: run
+2025-01-20 11:01:11 INFO Agent starting run with config:
+	datamodule.batch_size: 16
+	model.backbone: resnet34
+	model.learning_rate: 1.0048039270771514
+	trainer.max_epochs: 1
+2025-01-20 11:01:11 INFO About to run command: /usr/bin/env python src/train_int.py datamodule.batch_size=16 model.backbone=resnet34 model.learning_rate=1.0048039270771514 trainer.max_epochs=1
+2025-01-20 11:01:16 INFO Running runs: ['kyn52fjt']
+2025-01-20 11:01:16 INFO Cleaning up finished run: kyn52fjt
+2025-01-20 11:01:17 INFO Agent received command: run
+2025-01-20 11:01:17 INFO Agent starting run with config:
+	datamodule.batch_size: 32
+	model.backbone: resnet18
+	model.learning_rate: 1.0059844982547568
+	trainer.max_epochs: 1
+2025-01-20 11:01:17 INFO About to run command: /usr/bin/env python src/train_int.py datamodule.batch_size=32 model.backbone=resnet18 model.learning_rate=1.0059844982547568 trainer.max_epochs=1
+2025-01-20 11:01:22 INFO Running runs: ['4vgra9va']
+2025-01-20 11:01:22 INFO Cleaning up finished run: 4vgra9va
+2025-01-20 11:01:22 INFO Agent received command: run
+2025-01-20 11:01:22 INFO Agent starting run with config:
+	datamodule.batch_size: 16
+	model.backbone: resnet34
+	model.learning_rate: 1.003012052641329
+	trainer.max_epochs: 2
+2025-01-20 11:01:22 INFO About to run command: /usr/bin/env python src/train_int.py datamodule.batch_size=16 model.backbone=resnet34 model.learning_rate=1.003012052641329 trainer.max_epochs=2
+2025-01-20 11:01:27 INFO Running runs: ['0brku8ix']
+2025-01-20 11:01:27 ERROR Detected 3 failed runs in the first 60 seconds, shutting down.
+2025-01-20 11:01:27 INFO To disable this check set WANDB_AGENT_DISABLE_FLAPPING=true
+2025-01-20 11:02:21 INFO Running runs: []
+2025-01-20 11:02:22 INFO Agent received command: run
+2025-01-20 11:02:22 INFO Agent starting run with config:
+	datamodule.batch_size: 16
+	model.backbone: resnet50
+	model.learning_rate: 1.0003470222349702
+	trainer.max_epochs: 1
+2025-01-20 11:02:22 INFO About to run command: /usr/bin/env python src/train_int.py datamodule.batch_size=16 model.backbone=resnet50 model.learning_rate=1.0003470222349702 trainer.max_epochs=1
+2025-01-20 11:02:27 INFO Running runs: ['c94j8xhh']
+2025-01-20 11:02:27 INFO Cleaning up finished run: c94j8xhh
+2025-01-20 11:02:27 INFO Agent received command: run
+2025-01-20 11:02:27 INFO Agent starting run with config:
+	datamodule.batch_size: 64
+	model.backbone: resnet34
+	model.learning_rate: 1.0095609348939354
+	trainer.max_epochs: 1
+2025-01-20 11:02:27 INFO About to run command: /usr/bin/env python src/train_int.py datamodule.batch_size=64 model.backbone=resnet34 model.learning_rate=1.0095609348939354 trainer.max_epochs=1
+2025-01-20 11:02:32 INFO Running runs: ['ry3m0i8b']
+2025-01-20 11:02:32 INFO Cleaning up finished run: ry3m0i8b
+2025-01-20 11:02:33 INFO Agent received command: run
+2025-01-20 11:02:33 INFO Agent starting run with config:
+	datamodule.batch_size: 32
+	model.backbone: resnet34
+	model.learning_rate: 1.0025521704284712
+	trainer.max_epochs: 2
+2025-01-20 11:02:33 INFO About to run command: /usr/bin/env python src/train_int.py datamodule.batch_size=32 model.backbone=resnet34 model.learning_rate=1.0025521704284712 trainer.max_epochs=2
+2025-01-20 11:02:38 INFO Running runs: ['69ggkci0']
+2025-01-20 11:02:38 ERROR Detected 3 failed runs in the first 60 seconds, shutting down.
+2025-01-20 11:02:38 INFO To disable this check set WANDB_AGENT_DISABLE_FLAPPING=true
+2025-01-20 11:04:01 INFO Running runs: []
+2025-01-20 11:04:02 INFO Agent received command: run
+2025-01-20 11:04:02 INFO Agent starting run with config:
+	datamodule.batch_size: 32
+	model.backbone: resnet50
+	model.learning_rate: 1.0090853812064262
+	trainer.max_epochs: 2
+2025-01-20 11:04:02 INFO About to run command: /usr/bin/env python src/train.py datamodule.batch_size=32 model.backbone=resnet50 model.learning_rate=1.0090853812064262 trainer.max_epochs=2
+2025-01-20 11:04:07 INFO Running runs: ['o0fj09de']
+2025-01-21 13:29:59 INFO Running runs: []
+2025-01-21 13:29:59 INFO Agent received command: run
+2025-01-21 13:29:59 INFO Agent starting run with config:
+	datamodule.batch_size: 32
+	model.backbone: resnet34
+	model.learning_rate: 1.0075076073279143
+	trainer.max_epochs: 2
+2025-01-21 13:29:59 INFO About to run command: /usr/bin/env python src/train.py datamodule.batch_size=32 model.backbone=resnet34 model.learning_rate=1.0075076073279143 trainer.max_epochs=2
+2025-01-21 13:30:04 INFO Running runs: ['87iqlndr']
+2025-01-21 13:33:47 INFO Cleaning up finished run: 87iqlndr
+2025-01-21 13:33:48 INFO Agent received command: run
+2025-01-21 13:33:48 INFO Agent starting run with config:
+	datamodule.batch_size: 16
+	model.backbone: resnet50
+	model.learning_rate: 1.0004166751828734
+	trainer.max_epochs: 1
+2025-01-21 13:33:48 INFO About to run command: /usr/bin/env python src/train.py datamodule.batch_size=16 model.backbone=resnet50 model.learning_rate=1.0004166751828734 trainer.max_epochs=1
+2025-01-21 13:33:53 INFO Running runs: ['pparzk2r']
+2025-01-21 13:36:49 INFO Cleaning up finished run: pparzk2r
+2025-01-21 13:36:50 INFO Agent received command: run
+2025-01-21 13:36:50 INFO Agent starting run with config:
+	datamodule.batch_size: 64
+	model.backbone: resnet34
+	model.learning_rate: 1.002419782901144
+	trainer.max_epochs: 2
+2025-01-21 13:36:50 INFO About to run command: /usr/bin/env python src/train.py datamodule.batch_size=64 model.backbone=resnet34 model.learning_rate=1.002419782901144 trainer.max_epochs=2
+2025-01-21 13:36:55 INFO Running runs: ['bzdadxh0']
+2025-01-21 13:40:53 INFO Cleaning up finished run: bzdadxh0
+2025-01-21 13:40:53 INFO Agent received command: run
+2025-01-21 13:40:53 INFO Agent starting run with config:
+	datamodule.batch_size: 32
+	model.backbone: resnet50
+	model.learning_rate: 1.0072299786709191
+	trainer.max_epochs: 2
+2025-01-21 13:40:53 INFO About to run command: /usr/bin/env python src/train.py datamodule.batch_size=32 model.backbone=resnet50 model.learning_rate=1.0072299786709191 trainer.max_epochs=2
+2025-01-21 13:40:58 INFO Running runs: ['buuearvb']
+2025-01-21 13:44:46 INFO Cleaning up finished run: buuearvb
+2025-01-21 13:44:47 INFO Agent received command: run
+2025-01-21 13:44:47 INFO Agent starting run with config:
+	datamodule.batch_size: 16
+	model.backbone: resnet18
+	model.learning_rate: 1.008460371782816
+	trainer.max_epochs: 1
+2025-01-21 13:44:47 INFO About to run command: /usr/bin/env python src/train.py datamodule.batch_size=16 model.backbone=resnet18 model.learning_rate=1.008460371782816 trainer.max_epochs=1
+2025-01-21 13:44:52 INFO Running runs: ['ga9gaa5k']
+2025-01-21 13:47:22 INFO Cleaning up finished run: ga9gaa5k
+2025-01-21 13:47:22 INFO Agent received command: run
+2025-01-21 13:47:22 INFO Agent starting run with config:
+	datamodule.batch_size: 32
+	model.backbone: resnet18
+	model.learning_rate: 1.0054027049000225
+	trainer.max_epochs: 2
+2025-01-21 13:47:22 INFO About to run command: /usr/bin/env python src/train.py datamodule.batch_size=32 model.backbone=resnet18 model.learning_rate=1.0054027049000225 trainer.max_epochs=2
+2025-01-21 13:47:27 INFO Running runs: ['eyjexmcc']
+2025-01-21 13:50:54 INFO Cleaning up finished run: eyjexmcc
+2025-01-21 13:50:55 INFO Agent received command: run
+2025-01-21 13:50:55 INFO Agent starting run with config:
+	datamodule.batch_size: 64
+	model.backbone: resnet50
+	model.learning_rate: 1.0003471070049414
+	trainer.max_epochs: 2
+2025-01-21 13:50:55 INFO About to run command: /usr/bin/env python src/train.py datamodule.batch_size=64 model.backbone=resnet50 model.learning_rate=1.0003471070049414 trainer.max_epochs=2
+2025-01-21 13:51:00 INFO Running runs: ['haepjw8d']
+2025-01-21 13:54:17 INFO Cleaning up finished run: haepjw8d
+2025-01-21 13:54:17 INFO Agent received command: run
+2025-01-21 13:54:17 INFO Agent starting run with config:
+	datamodule.batch_size: 64
+	model.backbone: resnet50
+	model.learning_rate: 1.0003356061354851
+	trainer.max_epochs: 2
+2025-01-21 13:54:17 INFO About to run command: /usr/bin/env python src/train.py datamodule.batch_size=64 model.backbone=resnet50 model.learning_rate=1.0003356061354851 trainer.max_epochs=2
+2025-01-21 13:54:22 INFO Running runs: ['i7hos8s5']

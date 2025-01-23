@@ -7,7 +7,7 @@ from config import NUM_CLASSES
 import os
 import matplotlib.pyplot as plt
 from explainability import compute_gradcam, overlay_gradcam_on_image
-from google.cloud import run_v2
+# from google.cloud import run_v2
 
 
 def preprocess_image(image_path, input_size, mean, std):

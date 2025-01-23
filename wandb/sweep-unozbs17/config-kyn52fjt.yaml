@@ -1,0 +1,10 @@
+wandb_version: 1
+
+datamodule.batch_size:
+  value: 16
+model.backbone:
+  value: resnet34
+model.learning_rate:
+  value: 1.0048039270771514
+trainer.max_epochs:
+  value: 1
