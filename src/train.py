@@ -16,7 +16,7 @@ dotenv.load_dotenv()
 logger = HydraRichLogger(level=os.getenv("LOG_LEVEL", "INFO"))
 
 
-@hydra.main(version_base=None, config_path="config", config_name="train")
+#@hydra.main(version_base=None, config_path="config", config_name="train")
 def train_model(cfg: DictConfig) -> None:
     """Train and evaluate the model."""
     logger.info("Starting training script")
