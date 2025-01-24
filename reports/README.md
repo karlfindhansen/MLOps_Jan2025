@@ -450,7 +450,8 @@ In this project, we used Vertex AI from Google Cloud to train our model. Compute
 >
 > Answer:
 
---- question 21 fill here ---
+[image of Cloud build history](reports/reports/figures/Cloud_build_history.png).**
+
 
 ### Question 22
 
