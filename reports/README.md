@@ -226,6 +226,8 @@ These practices are crucial in larger projects for several reasons. Linting and 
 >
 > Answer:
 
+We have implemented 11 distinct tests. We are testing the API using the /predict/ endpoint. We are testing the data, that we initialize the dataloader correctly, and that the dataloader returns the correct number of samples. We are testing that model, that it is correctly loaded, and that we can do a forward pass. We are also testing the metrics, output shape as well as the optimizer and scheduler. We didn't manage for test_api to work in the github actions, but it works locally.
+
 --- question 7 fill here ---
 
 ### Question 8
@@ -243,7 +245,7 @@ These practices are crucial in larger projects for several reasons. Linting and 
 
 When we omit the tests in the coverage report, we get a coverage of 83%, this not including code for the whole project but only code for the following files:
 
-'''
+'''plaintext
 Name              Stmts   Miss  Cover
 -------------------------------------
 src/__init__.py       0      0   100%
