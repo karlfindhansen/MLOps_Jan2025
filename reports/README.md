@@ -426,7 +426,7 @@ In this project, we used Vertex AI from Google Cloud to train our model. Compute
 >
 > Answer:
 
-[image of buceket](reports/figures/Buckets overview.png).**
+[image of buceket](reports/figures/Buckets_overview.png).**
 
 ### Question 20
 
@@ -435,7 +435,7 @@ In this project, we used Vertex AI from Google Cloud to train our model. Compute
 >
 > Answer:
 
---- question 20 fill here ---
+[image of artifact registry](reports/figures/artifact_register.png).**
 
 ### Question 21
 
