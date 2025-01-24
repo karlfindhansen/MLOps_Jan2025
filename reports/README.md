@@ -356,12 +356,12 @@ As seen in image below we have tracked the validation accuracy. The validation a
 We want to see an increasing validation accuracy. This means the model performance is improving. A model with high validation accuracy is likely to perform better on unseen test data, indicating good generalization
 If the validation remains consistently low, it may indicate underfitting. This happens when the model is too simple to capture the underlying patterns in the data. 
 If there is a large difference between training and validtaion accuracy, it indicates overfitting. In this case the mdoel can predict training samples very well, but is unable to generalise to the new data instances. 
-[Validation Accuracy](figures/wandb1.png)
+![Validation Accuracy](figures/wandb1.png)
 
 We also tracked trainig recall over epochs. Recall measures the models ability to correctly identify all relevant positive instances in the training dataset. In a multiclass scenario, like ours, recall is calculates for each class and than aggragated. 
 This metric, concerns only predictions in the training, it tells us if the model is improving over the training epochs. It is a good metric to monitor, as we want to make sure that performance is improving; this would mean recall is increasing.
 If recall is decrerasing it could indicate overfitting or a poor learning rate. If the recall plateaues, it could mean, the mdoel has learned all that it can from the training data. 
-[Training Recall](figures/wandb2.png)
+![Training Recall](figures/wandb2.png)
 
 
 
@@ -614,7 +614,7 @@ gcloud ai custom-jobs create \
 >
 > Answer:
 
-[Diagram of our project](figures/diagram.png)
+![Diagram of our project](figures/diagram.png)
 
 The diagram illustrates the project in three tiers: 
 
@@ -666,4 +666,5 @@ The diagram illustrates the project in three tiers:
 ### Question 31
 
 > **State the individual contributions of each team member. This is required information from DTU, because we need to**
-> **make sure all members contributed actively to the project. Additionally,
+> **make sure all members contributed actively to the project. Additionally, state if/how you have used generative AI tools in your project.**
+>**Recommended answer length: 50-300 words.**
