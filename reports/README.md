@@ -323,7 +323,7 @@ We don’t make use of caching, this is something we could do to optimise our wo
 We used Hydra for managing configurations. Hydra simplifies managing hyperparameters and experiment settings through .yaml config files.
 To run an experiment: 
 ```bash 
-python train.py lr=1e-3 batch_size=64
+python train.py hyperparameters
 ```
 
 ### Question 13
@@ -339,7 +339,11 @@ python train.py lr=1e-3 batch_size=64
 >
 > Answer:
 
---- question 13 fill here ---
+We ensured the reproducibility of experiments by using Hydra for configuration management and and Weights & Biases (W&B) for logging experiment metadata and results.
+
+When an experiment is run, the following happens: 
+- Hydra dynamically manages hyperparameters and settings through the YAML config files.
+- W&B automatically logs experiment results, including metrics, configuration parameters, and training progress. Each experiment is assigned a unique run ID for tracking. 
 
 ### Question 14
 
