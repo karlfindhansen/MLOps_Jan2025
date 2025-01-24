@@ -19,6 +19,7 @@ from config import NUM_CLASSES
 from omegaconf import DictConfig, OmegaConf
 import hydra
 from google.cloud import storage
+from io import BytesIO
 
 os.environ["PYTORCH_ENABLE_MPS_FALLBACK"] = "1"
 
@@ -28,8 +29,11 @@ client = storage.Client()
 @hydra.main(version_base=None, config_path="../config", config_name="train")
 def main(cfg: DictConfig) -> None:
     # GCS bucket and dataset path
-    bucket_name = "bird-classification-data"  # Replace with your GCS bucket name
+    data_bucket_name = "bird-classification-data"  # Replace with your GCS bucket name
     dataset_prefix = "files/md5"  # Replace with the path to your dataset in GCS
+    model_bucket_name = "bird-calssifier-model"
+    model_save_path = "models/best_model.pth"
+    local_model_path = "src/logs/checkpoints/checkpoint.ckpt"
 
     # Use the GCS bucket directly for training
     backbone = "resnet50"
@@ -41,7 +45,7 @@ def main(cfg: DictConfig) -> None:
 
     # Initialize dataset
     dataset = CustomDataset(
-        bucket_name=bucket_name,
+        bucket_name=data_bucket_name,
         prefix=dataset_prefix,
         model_name=backbone,
         num_classes=num_classes
@@ -59,7 +63,17 @@ def main(cfg: DictConfig) -> None:
     test_dataloader = DataLoader(test_dataset, batch_size=2, shuffle=False)
 
     # Call train_model function
-    train_model(cfg, train_dataloader, val_dataloader, test_dataloader)
+    best_model = train_model(cfg, train_dataloader, val_dataloader, test_dataloader)
+
+    # Save the model directly to GCS
+    client = storage.Client()
+    bucket = client.bucket(model_bucket_name)
+    blob = bucket.blob(model_save_path)
+
+    # Upload from local file
+    blob.upload_from_filename(local_model_path)
+    print(f"Model successfully saved to GCS bucket: {model_bucket_name}/{model_save_path}")
+
 
 if __name__ == "__main__":
     main()

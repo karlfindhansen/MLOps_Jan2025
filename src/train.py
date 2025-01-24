@@ -74,3 +74,5 @@ def train_model(cfg: DictConfig, train_dataloader, val_dataloader, test_dataload
         # artifact.add_file(f"{logdir}/checkpoints/checkpoint.ckpt")
         # experiment_logger.experiment.log_artifact(artifact)
         logger.info(f"Model saved at {logdir}/checkpoints/checkpoint.ckpt")
+
+    return best_model
