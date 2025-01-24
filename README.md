@@ -19,6 +19,9 @@ We drew inspiration from the MLOps template provided in the course, to design ou
 
 # How to run the frontend
 
+1. Get one image form the CUB200 dataset.
+2. Run the following command:
 ```bash
 streamlit run src/frontend.py
 ```
+3. Upload your image and see the predictions!
