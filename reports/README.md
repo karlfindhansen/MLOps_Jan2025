@@ -419,7 +419,7 @@ Here is a link to the training dockerfile: <https://github.com/karlfindhansen/ML
 >
 > Answer:
 
-When debugging, we primarily relied on print statements and error messages to identify issues in the code. Additionally, we used torch.profiler to see our potential bottlenecks. The largest bottlenecks were in the data loading and model training phases. Profiling revealed that data preprocessing and loading from disk were taking a significant amount of the time, especially when the dataset was large. While this posed opportunities to optimize the dataloader we chose to focus on other things instead. While this would have been a great learning opportunity, optimization issues weren’t a problem in our small project, which is why we decided to move on to thing more important to this particular project.
+When debugging, we primarily relied on print statements and error messages to identify issues in the code. For more complex issues involving many scripts and variables we also used the python debugger when printing made it too difficult. Additionally, we used torch.profiler to see our potential bottlenecks. The largest bottlenecks were in the data loading and model training phases. Profiling revealed that data preprocessing and loading from disk were taking a significant amount of the time, especially when the dataset was large. While this posed opportunities to optimize the dataloader we chose to focus on other things instead. While this would have been a great learning opportunity, optimization issues weren’t a problem in our small project, which is why we decided to move on to thing more important to this particular project.
 
 ## Working in the cloud
 
