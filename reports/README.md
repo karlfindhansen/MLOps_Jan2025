@@ -391,7 +391,7 @@ For our project, we developed several Docker images. Our Project includes images
 **Training image**:  This container is used for model training. The Dockerfile installs essential libraries, copies the source code and data, and sets the working directory for training execution. For example, to run the training container:
 
 ```bash
-docker run trainer:latest lr=1e-3 batch_size=64
+docker run trainer:latest 
 ```
 
 **API image**:  The API container is used for eploying the FastAPI backend, which acts as an inference gateway in out project. The Dockerfile sets up the FastAPI application, including installing dependencies and configuring the uvicorn server. To run the API container:
