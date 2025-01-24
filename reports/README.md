@@ -271,7 +271,7 @@ These practices are crucial in larger projects for several reasons. Linting and 
 >
 > Answer:
 
---- question 10 fill here ---
+Yes, we used DVC to manage the dataset efficiently. Specifically, we tracked our dataset (CUB-200-2011) with DVC and stored it in a Google Cloud Storage (GCS) bucket. By using DVC, we were able to version our dataset alongside the codebase. This allowed us to maintain reproducibility and avoided issues caused by outdated datasets. Also, it is considered a bad practice to store the dataset directly on GitHub, and keeping the dataset separate from it reduced the repository size substantially. Lastly, it simplified collaboration, as team members could pull the exact dataset version by simply running `dvc pull`, instead of having to download it manually from another source (e.g. Dropbox). So by using DVC, we improved reproducibility and prevented dataset management headaches.
 
 ### Question 11
 
