@@ -436,11 +436,11 @@ When debugging, we primarily relied on print statements and error messages to id
 >
 > Answer:
 
-1. Compute
+Compute
 		Google Cloud's Compute service is used to obtain computing resources to run applications, including virtual machines (VMs) 		which we use to train out model and containers which we used to run our app.
-2. Storage
+Storage
 		Google Cloud's Storage service offers scalable and secure storage and we used this for our training data, as well as storing 		our trained model and docker images.
-3. AI/ML
+AI/ML
 		Google Cloud's AI/ML services are tools for building and deploying machine learning models. We used this service with vertex 		AI which we use to both train and deploy our for model to the buckets.
 
 
