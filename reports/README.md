@@ -228,8 +228,6 @@ These practices are crucial in larger projects for several reasons. Linting and 
 
 We have implemented 11 distinct tests. We are testing the API using the /predict/ endpoint. We are testing the data, that we initialize the dataloader correctly, and that the dataloader returns the correct number of samples. We are testing that model, that it is correctly loaded, and that we can do a forward pass. We are also testing the metrics, output shape as well as the optimizer and scheduler. We didn't manage for test_api to work in the github actions, but it works locally.
 
---- question 7 fill here ---
-
 ### Question 8
 
 > **What is the total code coverage (in percentage) of your code? If your code had a code coverage of 100% (or close**
@@ -249,9 +247,6 @@ When we omit the tests in the coverage report, we get a coverage of 83%, this no
 
 Many of the files in the repository are untouched from the testing, and the testing we do is fairly simple. Even if we had 100% code coverage, we would not trust our code to be error-free. Code coverage is a metric that indicates the percentage of code that is executed by tests. While high code coverage is a good indicator of test quality, it does not guarantee that the tests are good or that the code is free of errors.
 
-
---- question 8 fill here ---
-
 ### Question 9
 
 > **Did you workflow include using branches and pull requests? If yes, explain how. If not, explain how branches and**
@@ -265,7 +260,7 @@ Many of the files in the repository are untouched from the testing, and the test
 >
 > Answer:
 
---- question 9 fill here ---
+We made use of both branches and PR in our project. We had a branch for each separate feature or bug fix. When a team member finished working on their branch, they merged their changes to with main. If there were somethings that needed to be fixed or checked a team member would create a pull request, where the other team members could review the changes. Then we would either merge or close the pull request. This workflow helped us to keep the main branch clean and stable, as well as making sure that the code was reviewed by at least one other team member before being merged.
 
 ### Question 10
 
