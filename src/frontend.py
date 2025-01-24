@@ -1,13 +1,29 @@
-import streamlit as st
-import torch
-import timm
-from PIL import Image
-import numpy as np
-from config import NUM_CLASSES
 import os
+
 import matplotlib.pyplot as plt
+import numpy as np
+import requests
+import streamlit as st
+import timm
+import torch
+from google.cloud import run_v2
+from PIL import Image
+
+from config import NUM_CLASSES
 from explainability import compute_gradcam, overlay_gradcam_on_image
-# from google.cloud import run_v2
+
+
+@st.cache_resource
+def get_backend_url():
+    """Get the URL of the backend service."""
+    parent = "projects/keen-defender-448412-p6/locations/europe-west10"
+    client = run_v2.ServicesClient()
+    services = client.list_services(parent=parent)
+    for service in services:
+        if service.name.split("/")[-1] == "backend":
+            return service.uri
+    name = os.environ.get("BACKEND", None)
+    return name
 
 
 def preprocess_image(image_path, input_size, mean, std):
@@ -22,66 +38,106 @@ def preprocess_image(image_path, input_size, mean, std):
     return image.unsqueeze(0)
 
 
-def load_model(model_path, model_name, num_classes):
-    model = timm.create_model(model_name, pretrained=False, num_classes=num_classes)
-    model.load_state_dict(torch.load(model_path))
-    model.eval()
-    return model
+def classify_image(image, backend):
+    """Send the image to the backend for classification."""
+    predict_url = f"{backend}/predict/"
+
+    response = requests.post(predict_url, files=image, timeout=20)
+
+    if response.status_code == 200:
+        return response.json()
+    return None
 
 
-def main():
-    st.title("Bird Classifier with Saliency Map")
+def main() -> None:
+    num_classes = NUM_CLASSES
 
-    uploaded_file = st.file_uploader("Choose an image of your favorite bird...", type=["jpg", "png", "jpeg"])
+    backend = get_backend_url()
+    if backend is None:
+        msg = "Backend service not found"
+        raise ValueError(msg)
+
+    st.title("Bird Image Classification")
+
+    uploaded_file = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png"])
 
     if uploaded_file is not None:
-        image = Image.open(uploaded_file)
-        st.image(image, caption="Uploaded Bird Image.", use_container_width=True)
+        img = uploaded_file.read()
 
-        input_size = (224, 224)
-        mean = [0.485, 0.456, 0.406]
-        std = [0.229, 0.224, 0.225]
-        input_tensor = preprocess_image(uploaded_file, input_size, mean, std)
+        st.image(img, caption="Uploaded Bird Image.", use_container_width=True)
 
-        model_name = "resnet50"
-        num_classes = NUM_CLASSES
-        model = load_model("../model.pth", model_name, num_classes)
-        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        input_tensor = input_tensor.to(device)
-        model = model.to(device)
+        # Read the file content
+        file_content = uploaded_file.getvalue()
 
-        input_tensor.requires_grad_()
-        with torch.no_grad():
-            output = model(input_tensor)
+        # Create form data dictionary
+        form_data = {"image": ("image.jpg", file_content)}
 
-        probabilities = torch.nn.functional.softmax(output, dim=1)
-        top5_probabilities, top5_classes = torch.topk(probabilities, 5)
+        result = classify_image(form_data, backend=backend)
 
-        class_names = os.listdir("../data")[:num_classes]
-        class_names = [name[4:].replace("_", " ") for name in class_names]
+        if result is not None:
+            prediction = result["top5_classes"]
+            probabilities = result["top5_probabilities"]
 
-        top5_classes = top5_classes.cpu().numpy().flatten()
-        top5_probabilities = top5_probabilities.cpu().numpy().flatten()
+            class_names = {
+                1: "Black footed Albatross",
+                2: "Laysan Albatross",
+                3: "Sooty Albatross",
+                4: "Groove billed Ani",
+                5: "Crested Auklet",
+                6: "Least Auklet",
+                7: "Parakeet Auklet",
+                8: "Rhinoceros Auklet",
+                9: "Brewer Blackbird",
+                10: "Red winged Blackbird",
+                11: "Rusty Blackbird",
+                12: "Yellow headed Blackbird",
+                13: "Bobolink",
+                14: "Indigo Bunting",
+                15: "Lazuli Bunting",
+                16: "Painted Bunting",
+                17: "Cardinal",
+                18: "Spotted Catbird",
+                19: "Gray Catbird",
+            }
 
-        st.write("Top 5 Predictions:")
-        for i in range(5):
-            st.write(f"{class_names[top5_classes[i]]}: {top5_probabilities[i] * 100:.2f}%")
+            st.write("Class Prediction:", class_names[prediction[0] - 1])
+            st.write("Probability:", probabilities[0])
 
-        # Create a bar plot
-        fig, ax = plt.subplots()
-        ax.bar(range(5), [top5_probabilities[i] * 100 for i in range(5)], color="skyblue")
-        ax.set_xticks(range(5))
-        ax.set_xticklabels([class_names[top5_classes[i]] for i in range(5)], rotation=90)
-        ax.set_ylabel("Probability (%)")
-        ax.set_title("Top 5 Predictions")
+            top5_classes = prediction
+            top5_probabilities = probabilities
 
-        st.pyplot(fig)
+            st.header("Top 5 Predictions:")
+            for i in range(5):
+                st.write(f"{class_names[top5_classes[i]]}: {top5_probabilities[i] * 100:.2f}%")
 
-        # Compute Grad-CAM for the top predicted class
-        gradcam = compute_gradcam(model, input_tensor, top5_classes[0])
-        gradcam_overlay = overlay_gradcam_on_image(image, gradcam)
+            # Create a bar plot
+            fig, ax = plt.subplots()
+            ax.bar(range(5), [top5_probabilities[i] * 100 for i in range(5)], color="skyblue")
+            ax.set_xticks(range(5))
+            ax.set_xticklabels([class_names[top5_classes[i]] for i in range(5)], rotation=90)
+            ax.set_ylabel("Probability (%)")
+            ax.set_title("Top 5 Predictions")
 
-        st.image(gradcam_overlay, caption="Grad-CAM Overlay", use_container_width=True)
+            st.pyplot(fig)
+
+            model = timm.create_model("resnet50", pretrained=True, num_classes=num_classes)
+
+            image = Image.open(uploaded_file)
+
+            input_size = (224, 224)
+            mean = [0.485, 0.456, 0.406]
+            std = [0.229, 0.224, 0.225]
+            input_tensor = preprocess_image(uploaded_file, input_size, mean, std)
+
+            # Compute Grad-CAM for the top predicted class
+            gradcam = compute_gradcam(model, input_tensor, prediction[0])
+            gradcam_overlay = overlay_gradcam_on_image(image, gradcam)
+
+            st.header("Saliency Map")
+            st.image(gradcam_overlay, caption="Grad-CAM Overlay", use_container_width=True)
+
+        else:
+            st.write("Failed to get prediction")
 
 
 if __name__ == "__main__":
