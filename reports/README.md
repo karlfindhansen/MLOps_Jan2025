@@ -343,7 +343,18 @@ Yes, we used DVC to manage the dataset efficiently. Specifically, we tracked our
 >
 > Answer:
 
---- question 14 fill here ---
+As seen in image below we have tracked the validation accuracy. The validation accuracy, informs how well the model is able to generalize to unseen examples during training time. This metric is calculated using a separate validation dataset, distinct from the training dataset, which simulates real-world examples the model has not encountered before. It is an important metric to monitor as it can reveal if the model under- or overfits or plateaueing. 
+We want to see an increasing validation accuracy. This means the model performance is improving. A model with high validation accuracy is likely to perform better on unseen test data, indicating good generalization
+If the validation remains consistently low, it may indicate underfitting. This happens when the model is too simple to capture the underlying patterns in the data. 
+If there is a large difference between training and validtaion accuracy, it indicates overfitting. In this case the mdoel can predict training samples very well, but is unable to generalise to the new data instances. 
+[Validation Accuracy](figures/wandb1.png)
+
+We also tracked trainig recall over epochs. Recall measures the models ability to correctly identify all relevant positive instances in the training dataset. In a multiclass scenario, like ours, recall is calculates for each class and than aggragated. 
+This metric, concerns only predictions in the training, it tells us if the model is improving over the training epochs. It is a good metric to monitor, as we want to make sure that performance is improving; this would mean recall is increasing.
+If recall is decrerasing it could indicate overfitting or a poor learning rate. If the recall plateaues, it could mean, the mdoel has learned all that it can from the training data. 
+[Training Recall](figures/wandb2.png)
+
+
 
 ### Question 15
 
@@ -569,7 +580,7 @@ In this project, we used Vertex AI from Google Cloud to train our model. Compute
 >
 > Answer:
 
-![Diagram of our project](figures/diagram.png)
+[Diagram of our project](figures/diagram.png)
 
 The diagram illustrates the project in three tiers: 
 
