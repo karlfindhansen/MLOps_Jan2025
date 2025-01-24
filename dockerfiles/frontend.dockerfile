@@ -12,7 +12,7 @@ RUN mkdir /app
 
 WORKDIR /app
 
-COPY src/requirements_frontend.txt /app/requirements_frontend.txt
+COPY requirements_frontend.txt /app/requirements_frontend.txt
 COPY src/frontend.py /app/frontend.py
 COPY src/explainability.py /app/explainability.py
 COPY src/config /app/config

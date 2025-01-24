@@ -12,7 +12,7 @@ RUN mkdir /app
 
 WORKDIR /app
 
-COPY src/requirements_backend.txt /app/requirements_backend.txt
+COPY requirements_backend.txt /app/requirements_backend.txt
 COPY src/backend.py /app/backend.py
 COPY src src
 COPY pyproject.toml pyproject.toml
