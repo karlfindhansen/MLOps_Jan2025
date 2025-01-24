@@ -301,6 +301,7 @@ For our project we have set up contionous integration to ensure code quality. Th
 
 We don’t make use of caching, this is something we could do to optimise our workflow and make it faster.  
 
+![Github Actions Workflow](figures/github_action.png)
 
 ## Running code and tracking experiments
 
