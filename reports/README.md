@@ -576,11 +576,14 @@ In the API test we test for:
 >
 > Answer:
 
---- question 26 fill here ---
+We did not manage to implement monitoring in our project. However, monitoring would help the longevity of our application. Using monitoring we could track the performance of the application. This would help identify any drift in the model's predictions caused by changes in data distribution over time. Additionally, monitoring could detect failures or anomalies in the backend, such as slow responses or failed API calls. 
+
+Using monitoring, we could set up alerts, to notify us when something goes wrong. This would help us maintain a robust and reliable model. Maybe at somepoint it would be beneficial to retrain the model becauese of changes in data ditrubution - using monitoring we could set up alerts to inform us about this. 
 
 ## Overall discussion of project
 
 > In the following section we would like you to think about the general structure of your project.
+
 
 ### Question 27
 
