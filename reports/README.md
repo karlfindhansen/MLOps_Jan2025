@@ -718,6 +718,6 @@ The diagram illustrates the project in three tiers:
 
 - Student s205336 contributed by implementing CLI to switch parameters for model training to see the effect of this, using Profiling to evaluate bottlenecks,  helped configure some of the API and  configure it to use the trained model in the cloud as well as testing this with postman, Setting up DVC for the model, setup training using google cloud VM with vertex AI using the dataset in the google cloud buckets and saving the model to a bucket.
 
-- All members contributed to code by...
+- All members contributed equally to the report. 
 
 We have used ChatGPT to assist in writing, commenting and debugging our code, resolving specific issues, and clarifying concepts related to our implementation. We also used this AI tool to refine the wording of some parts of this report.
