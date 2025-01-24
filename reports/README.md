@@ -720,4 +720,4 @@ The diagram illustrates the project in three tiers:
 
 - All members contributed to code by...
 
-We have used ChatGPT to assist in debugging our code, resolving specific issues, and clarifying concepts related to our implementation. We also used this AI tool to refine the wording of some parts of this report.
+We have used ChatGPT to assist in writing, commenting and debugging our code, resolving specific issues, and clarifying concepts related to our implementation. We also used this AI tool to refine the wording of some parts of this report.
