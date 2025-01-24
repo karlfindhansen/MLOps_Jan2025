@@ -558,27 +558,22 @@ Yes, we used DVC to manage the dataset efficiently. Specifically, we tracked our
 >
 > Answer:
 
-![Diagram of our project](MLOps_Jan2025/reports/figures/diagram.png)
+![Diagram of our project](figures/diagram.png)
 
 The diagram illustrates the project in three tiers: 
 
 **At the first level, a user or developer interacts with the system.**
 
-    - A user will use the system by uploading an image an interactive interface. In this way the user interacts with our frontend application which is developed with Streamlit. 
-
-    - A developer can interact with the project by cloning the source code on GitHub. 
+- A user will use the system by uploading an image an interactive interface. In this way the user interacts with our frontend application which is developed with Streamlit. 
+- A developer can interact with the project by cloning the source code on GitHub. 
 
 **The second level illustrates the frontend tool.**
 
-    - When a user uploads an image, Streamlit communicates with FastAPI, which acts as a gateway to the backend. The image is processed, and FastAPI returns the result (bird species prediction) to the user through the interface. 
-
-    - To make the predictions FastAPI fetches a pre-trained model (fine-tuned ResNet) hosted in the backend, to classify the uploaded image
-
-    - For developers, when the system is running, the newest Docker image is pulled to ensure the latest backend version is used. All dependencies required by FastAPI are encapsulated within the Docker container, ensuring portability and consistency.
-
-    - FastAPI connects to Google Cloud to fetch the model for classification. 
-
-    - Google Cloud SDK is used to push the Docker container to the cloud. 
+- When a user uploads an image, Streamlit communicates with FastAPI, which acts as a gateway to the backend. The image is processed, and FastAPI returns the result (bird species prediction) to the user through the interface. 
+- To make the predictions FastAPI fetches a pre-trained model (fine-tuned ResNet) hosted in the backend, to classify the uploaded image
+- For developers, when the system is running, the newest Docker image is pulled to ensure the latest backend version is used. All dependencies required by FastAPI are encapsulated within the Docker container, ensuring portability and consistency.
+- FastAPI connects to Google Cloud to fetch the model for classification. 
+- Google Cloud SDK is used to push the Docker container to the cloud. 
 
 **The third level illustrates the backend**
 
