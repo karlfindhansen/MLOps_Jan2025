@@ -673,4 +673,18 @@ The diagram illustrates the project in three tiers:
 
 > **State the individual contributions of each team member. This is required information from DTU, because we need to**
 > **make sure all members contributed actively to the project. Additionally, state if/how you have used generative AI tools in your project.**
->**Recommended answer length: 50-300 words.**
+>
+> Recommended answer length: 50-300 words.
+>
+> Example:
+> *Student sXXXXXX was in charge of developing of setting up the initial cookie cutter project and developing of the docker containers for training our applications.*
+> *Student sXXXXXX was in charge of training our models in the cloud and deploying them afterwards.*
+> *All members contributed to code by...*
+> *We have used ChatGPT to help debug our code. Additionally, we used GitHub Copilot to help write some of our code.*
+> Answer:
+
+- Student s243345 contributed by implementing a linting workflow, adding explainability with saliency maps, setting up wandb sweeps for hyperparameter optimization, integrating Hydra with wandb and Pytorch Lightning, and establishing DVC with a GCP Bucket.
+- Student sXXXXXX contributed by...
+- All members contributed to code by...
+
+We have used ChatGPT to assist in debugging our code, resolving specific issues, and clarifying concepts related to our implementation. We also used this AI tool to refine the wording of some parts of this report.
