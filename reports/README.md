@@ -407,7 +407,8 @@ Yes, we used DVC to manage the dataset efficiently. Specifically, we tracked our
 >
 > Answer:
 
---- question 18 fill here ---
+In this project, we used Vertex AI from Google Cloud to train our model. Compute Engine is the part of Google Cloud that helps us run virtual machines (VMs). Even though our model and dataset are small, Vertex AI automatically takes care of creating and managing the VMs for us. The VMs used were mainly CPU instances, which we chose to save on ressources and money and because of the simple model and dataset, this was sufficient. This setup lets us focus on training the model, while Vertex AI handles everything behind the scenes, like choosing and managing the VMs. This made the training process easier and faster without needing to manually set up or monitor the VMs.
+
 
 ### Question 19
 
