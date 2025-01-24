@@ -551,7 +551,13 @@ We managed to write an API for our model, we used FastAPI to do it. We had some 
 >
 > Answer:
 
---- question 25 fill here ---
+We performed unit testing on the image prediction endpoint using the FastAPI. Specifically the tests are interested in ensuring that the API can handle and return predictions for images.
+
+In the API test we test for:
+- We check whether the specified directory contains images.
+- We verify that the image files are present in the directory.
+- Then we send an image to the /predict/ endpoint in the fastapi application.
+- Then we verify that the api responds with a prediction for the image. It doesn’t need to be the correct prediction, we simply need to get a response from the API.
 
 ### Question 26
 

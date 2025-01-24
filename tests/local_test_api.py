@@ -1,9 +1,12 @@
 import os
+
 from fastapi.testclient import TestClient
+
 from src.api import app
-'''
+
+"""
     TODO 'this file must be changed to test_api.py when github actions is set up with the cloud'
-'''
+"""
 IMAGE_ROOT = "./tests/images/"
 
 client = TestClient(app)
