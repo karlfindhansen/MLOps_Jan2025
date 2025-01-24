@@ -1,7 +1,8 @@
 defaults:
   - common
 
-logdir: null  # null correspond to default hydra config
+logdir: "logs"  # Set a default log directory here
+
 train: True
 evaluate: True
 upload_model: True
@@ -24,13 +25,6 @@ datamodule:
   batch_size: 32               # Batch size for DataLoader
   num_workers: 4               # Number of workers for DataLoader
   pin_memory: true             # Pin memory for DataLoader
-
-#experiment_logger:
-#  _target_: "pytorch_lightning.loggers.WandbLogger"
-#  project: "MLOps"
-#  entity: "javieryanespul-danmarks-tekniske-universitet"
-#  job_type: "train"
-#  save_code: True
 
 experiment_logger:
   _target_: "pytorch_lightning.loggers.WandbLogger"

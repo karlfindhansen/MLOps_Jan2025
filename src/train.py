@@ -1,29 +1,27 @@
 import os
 import shutil
-
 import dotenv
 import hydra
 import pytorch_lightning as pl
 from omegaconf import DictConfig, OmegaConf
-
-import wandb
 from hydra_loggers import HydraRichLogger, get_hydra_dir_and_job_name
-
 from model import CustomClassifier
-from datasets import CUB200_201
+import torch
+
+# Optional: Remove WandB import as it's no longer needed
+# import wandb
 
 dotenv.load_dotenv()
 logger = HydraRichLogger(level=os.getenv("LOG_LEVEL", "INFO"))
 
-
-#@hydra.main(version_base=None, config_path="config", config_name="train")
-def train_model(cfg: DictConfig) -> None:
+def train_model(cfg: DictConfig, train_dataloader, val_dataloader, test_dataloader):
     """Train and evaluate the model."""
     logger.info("Starting training script")
-    logdir = cfg.logdir or get_hydra_dir_and_job_name()[0]
+    
+    # Use a fallback for logdir if it's not in the config
+    logdir = cfg.get("logdir", os.path.join(os.getcwd(), "logs"))
     logger.info(f"Logging to {logdir}")
     os.makedirs(f"{logdir}/checkpoints", exist_ok=True)
-    os.makedirs(f"{logdir}/wandb", exist_ok=True)
 
     # Instantiate model and datamodule
     logger.info("Initializing model and datamodule")
@@ -34,12 +32,8 @@ def train_model(cfg: DictConfig) -> None:
         learning_rate=cfg.model.learning_rate,
         optimizer=cfg.model.optimizer,
     )
-    datamodule = CUB200_201(
-        image_dir=cfg.datamodule.image_dir,
-        model_name=cfg.datamodule.model_name,
-        num_classes=cfg.datamodule.num_classes,
-        download=True,
-    )
+    device = torch.device('cpu')  # Use CPU instead of MPS
+    model.to(device)
 
     # Instantiate logger and callbacks
     experiment_logger = hydra.utils.instantiate(cfg.experiment_logger, save_dir=logdir)
@@ -61,24 +55,22 @@ def train_model(cfg: DictConfig) -> None:
 
     if cfg.train:
         logger.info("Starting training")
-        trainer.fit(model, datamodule=datamodule)
+        trainer.fit(model, train_dataloader, val_dataloader)
 
     if cfg.evaluate:
         logger.info("Starting evaluation")
-        results = trainer.test(model, datamodule=datamodule)
+        results = trainer.test(model, test_dataloader)
 
     if cfg.upload_model:
         logger.info("Saving model as artifact")
         best_model = checkpoint_callback.best_model_path
         shutil.copy(best_model, f"{logdir}/checkpoints/checkpoint.ckpt")
-        artifact = wandb.Artifact(
-            name=cfg.model.artifact_name,
-            type="model",
-            metadata={k.lstrip("test_"): round(v, 3) for k, v in results[0].items()},  # remove test_ prefix and round
-        )
-        artifact.add_file(f"{logdir}/checkpoints/checkpoint.ckpt")
-        experiment_logger.experiment.log_artifact(artifact)
-
-
-if __name__ == "__main__":
-    train_model()
+        # Skip the WandB artifact upload and just save the model locally
+        # artifact = wandb.Artifact(
+        #     name=cfg.model.artifact_name,
+        #     type="model",
+        #     metadata={k.lstrip("test_"): round(v, 3) for k, v in results[0].items()},
+        # )
+        # artifact.add_file(f"{logdir}/checkpoints/checkpoint.ckpt")
+        # experiment_logger.experiment.log_artifact(artifact)
+        logger.info(f"Model saved at {logdir}/checkpoints/checkpoint.ckpt")

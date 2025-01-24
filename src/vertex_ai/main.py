@@ -1,27 +1,31 @@
 import sys
 import os
 
-# Add the parent directory to sys.path
+
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+os.environ["PYTORCH_ENABLE_MPS_FALLBACK"] = "1"
+
 
 from torch.utils.data import DataLoader, random_split
 from torch.optim import Adam
 from torch import nn
 import torch
 
-from dataset import CustomDataset  # Updated to work with GCS
+from dataset import CustomDataset
 from model import CustomClassifier
 from train import train_model
-from utils import plot_train_val_losses, compute_smoothgrad, save_model
+from utils import plot_train_val_losses, save_model
 from config import NUM_CLASSES
 from omegaconf import DictConfig, OmegaConf
 import hydra
 from google.cloud import storage
 
+os.environ["PYTORCH_ENABLE_MPS_FALLBACK"] = "1"
+
 # Initialize GCS client
 client = storage.Client()
 
-@hydra.main(version_base=None, config_path="../config", config_name="default_config")
+@hydra.main(version_base=None, config_path="../config", config_name="train")
 def main(cfg: DictConfig) -> None:
     # GCS bucket and dataset path
     bucket_name = "bird-classification-data"  # Replace with your GCS bucket name
@@ -31,18 +35,9 @@ def main(cfg: DictConfig) -> None:
     backbone = "resnet50"
     num_classes = NUM_CLASSES
 
+    # Make sure the config is printed and can be inspected
     print(cfg)
     print(OmegaConf.to_yaml(cfg))
-
-    hparams = cfg.experiment.hyperparameters
-
-    torch.manual_seed(hparams["seed"])
-    batch_size = hparams["batch_size"]
-    l_r = hparams["lr"]
-    n_epochs = hparams["n_epochs"]
-    weight_decay = hparams["weight_decay"]
-
-    print(batch_size, l_r, n_epochs, weight_decay)
 
     # Initialize dataset
     dataset = CustomDataset(
@@ -58,38 +53,13 @@ def main(cfg: DictConfig) -> None:
     test_size = len(dataset) - train_size - val_size
     train_dataset, val_dataset, test_dataset = random_split(dataset, [train_size, val_size, test_size])
 
-    print(f"Train size: {train_size}, Val size: {val_size}, Test size: {test_size}")
-
     # Create data loaders
-    train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
-    val_dataloader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False)
-    test_dataloader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
+    train_dataloader = DataLoader(train_dataset, batch_size=2, shuffle=True)
+    val_dataloader = DataLoader(val_dataset, batch_size=2, shuffle=False)
+    test_dataloader = DataLoader(test_dataset, batch_size=2, shuffle=False)
 
-    # Initialize model
-    model = CustomClassifier(
-        backbone=backbone,
-        num_classes=num_classes,
-        learning_rate=l_r
-    )
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    model = model.to(device)
-
-    # Define loss function and optimizer
-    criterion = nn.CrossEntropyLoss()
-    optimizer = Adam(model.parameters(), lr=l_r, weight_decay=weight_decay)
-
-
-    from hydra.core.global_hydra import GlobalHydra
-
-    if GlobalHydra().is_initialized():
-        GlobalHydra().clear()
-
-    # Train the model
-    train_losses, val_losses = train_model()
-
-    # Plot losses and save the model
-    plot_train_val_losses(train_losses, val_losses)
-    save_model(model, "../model.pth")
+    # Call train_model function
+    train_model(cfg, train_dataloader, val_dataloader, test_dataloader)
 
 if __name__ == "__main__":
     main()

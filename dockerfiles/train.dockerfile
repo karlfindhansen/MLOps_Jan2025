@@ -1,5 +1,5 @@
 # Base image
-FROM python:3.12-slim
+FROM python:3.11-slim
 
 # Install Python
 RUN apt update && \
@@ -12,7 +12,8 @@ COPY src/ src/
 COPY data/ data/
 
 WORKDIR /
+RUN pip install -U pip setuptools wheel
 RUN pip install -r requirements.txt --no-cache-dir
 RUN pip install . --no-deps --no-cache-dir
 
-ENTRYPOINT ["python", "-u", "src/train.py"]
+ENTRYPOINT ["python", "-u", "src/vertex_ai/train.py"]
