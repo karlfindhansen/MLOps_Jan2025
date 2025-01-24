@@ -501,7 +501,7 @@ In this project, we used Vertex AI from Google Cloud to train our model. Compute
 >
 > Answer:
 
-We used Vertex AI to train the model in the cloud to make the training simpler and to avoid managing the VM. We did this by first we set up the training proces to run locally while using the dataset we uploaded to the google cloud bucket. Modified the code to save the model to our model bucket after training. After confirming the process run worked locally, we built a docker image with the training process as entrypoint and uploaded this to the google artifact registry. Then we created a config file to specify some parameters and the docker image to be used. Then we can the whole process with vertex ai which spun up a VM to run it, by typing a command like:
+We set up the training process to run locally first, using a dataset we uploaded to a Google Cloud bucket. The training code was modified to save the trained model to our model bucket. Once the process was confirmed to work locally, we prepared to run it on Vertex AI. To do this, we built a Docker image with the training process as the entry point and uploaded it to the Google Artifact Registry. We also created a configuration file to specify the necessary parameters and the Docker image to be used. If we had finalized the Dockerfile in time, we could have run the entire process on Vertex AI by executing a command like:
 gcloud ai custom-jobs create \
   --region=us-central1 \
   --display-name=your-job-name \
