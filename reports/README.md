@@ -687,7 +687,10 @@ The diagram illustrates the project in three tiers:
 >
 > Answer:
 
---- question 30 fill here ---
+We used a variety of tools like Hydra for configuration, DVC for data, and Weights & Biases for logging. It was challenging to make these tools work well together. For example, configuring DVC to handle large datasets while syncing with GitHub Actions was difficult. To overcome this, we had to do research, read documentation, and learn how to add the needed dependencies in the training pipeline configurations. 
+
+Most group members were new to using Docker, it therefor required some effort from all of us, to get used to the framework. This has been a good learning experience. 
+
 
 ### Question 31
 
