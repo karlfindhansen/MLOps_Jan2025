@@ -611,7 +611,9 @@ In the API test we test for:
 >
 > Answer:
 
---- question 28 fill here ---
+We implemented a frontend for our API using Streamlit. This allowed us to provide an intuitive and interactive interface where users could upload images, view model predictions, and evaluate results without needing to interact directly with the backend code. We also implemented a saliency map computation so that the user can see the most relevant parts of the image for the class prediction. The frontend made our project more accessible to non-technical users, improving usability and demonstrating the functionality of our bird classification model effectively.
+
+Additionally, we enabled distributed data loading by incorporating parameters `DistributedSampler` and `num_workers` into our DataLoader functions for efficient usage across multiple GPUs or nodes. For model training, we also included parameters support for distributed strategies like Distributed Data Parallel (DDP).
 
 ### Question 29
 
