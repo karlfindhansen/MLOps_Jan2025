@@ -15,7 +15,7 @@ We expect to use a CNN model from the huggingface library pytorch-image-model (t
 
 
 ## Project Structure
-We drew inspiration from the MLOps template provided in the course, to design out project structure. Link to template <https://github.com/SkafteNicki/mlops_template>*. 
+We drew inspiration from the MLOps template provided in the course, to design out project structure. Link to template <https://github.com/SkafteNicki/mlops_template>. 
 
 # How to run the frontend
 
