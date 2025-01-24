@@ -1,4 +1,4 @@
-# MLOps_Jan2025
+# MLOps Implementation for Bird Recognition
 
 
 ### Overall goal of the project
