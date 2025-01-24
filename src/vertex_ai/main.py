@@ -65,13 +65,21 @@ def main(cfg: DictConfig) -> None:
     # Call train_model function
     best_model = train_model(cfg, train_dataloader, val_dataloader, test_dataloader)
 
-    # Save the model directly to GCS
-    client = storage.Client()
+    # Load the model from the checkpoint file
+    model = CustomClassifier(backbone=cfg.model.backbone, num_classes=cfg.model.num_classes)
+    model.load_state_dict(torch.load(best_model), strict=False)  # Load the model state dict from the checkpoint
+
+    # Save model directly to GCS
+    buffer = BytesIO()
+    torch.save(model.state_dict(), buffer)
+    buffer.seek(0)
+
+    # Upload the model to GCS from memory buffer
     bucket = client.bucket(model_bucket_name)
     blob = bucket.blob(model_save_path)
 
-    # Upload from local file
-    blob.upload_from_filename(local_model_path)
+    # Upload the model to GCS from memory buffer
+    blob.upload_from_file(buffer)
     print(f"Model successfully saved to GCS bucket: {model_bucket_name}/{model_save_path}")
 
 

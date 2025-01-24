@@ -64,6 +64,7 @@ def train_model(cfg: DictConfig, train_dataloader, val_dataloader, test_dataload
     if cfg.upload_model:
         logger.info("Saving model as artifact")
         best_model = checkpoint_callback.best_model_path
+        os.makedirs(f"{logdir}/checkpoints", exist_ok=True)
         shutil.copy(best_model, f"{logdir}/checkpoints/checkpoint.ckpt")
         # Skip the WandB artifact upload and just save the model locally
         # artifact = wandb.Artifact(
