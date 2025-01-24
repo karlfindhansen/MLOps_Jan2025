@@ -176,9 +176,6 @@ To get a copy of the developments enviroment, you would:
 
 By using this appraoch, we manage to ensure consistency and reproducibility. 
 
-
---- question 4 fill here ---
-
 ### Question 5
 
 > **We expect that you initialized your project using the cookiecutter template. Explain the overall structure of your**
@@ -195,8 +192,6 @@ By using this appraoch, we manage to ensure consistency and reproducibility.
 
 We unfortunately didn't use the cookiecutter template for our project. However we tried to follow the structure of the template as much as possible. The project structure can be seen in the README.md file in the repository. We have all the same files, except for the visualize.py file, which we didn't need. We also created new files for having an explanability element in the project and a part of our API front end, which is the explanation.py and frontend.py files in the src folder, this creates a saliency map for our frontend. We misnamed the evaluate.py file, and called it test.py file instead.
 
---- question 5 fill here ---
-
 ### Question 6
 
 > **Did you implement any rules for code quality and format? What about typing and documentation? Additionally,**
@@ -210,7 +205,9 @@ We unfortunately didn't use the cookiecutter template for our project. However w
 >
 > Answer:
 
---- question 6 fill here ---
+We used the Ruff VSCode extension for linting and formatting, ensuring that our code followed consistent style and quality standards. Additionally, a GitHub workflow was set up to validate whether files pushed to the main branch adhered to Ruff formatting rules. If issues were detected, it provided clear suggestions for corrections. For typing, we implemented type annotations in certain files to improve code clarity and reliability, although this was not applied universally. As for documentation, while formal documentation practices were not established, we added comments in critical sections to explain complex logic and key functionalities.
+
+These practices are crucial in larger projects for several reasons. Linting and formatting ensure a consistent codebase, making it easier for multiple contributors to read, understand, and modify the code without introducing unnecessary errors. Typing enhances code reliability by allowing static analysis tools to catch type-related bugs early. Documentation—whether formal or informal—provides essential context, which is especially valuable as projects grow in complexity.
 
 ## Version control
 
