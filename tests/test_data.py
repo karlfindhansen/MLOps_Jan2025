@@ -1,45 +1,32 @@
-import torch
 import os
-from src.datasets import CUB200201DataModule, CUB200_201
+import pytest
+from PIL import Image, UnidentifiedImageError
 from torch.utils.data import Dataset
+from src.datasets import CUB200_201 
 
-#def test_data():
-#    data_path = 'data'
-#    assert os.path.exists(data_path), f"Data path {data_path} does not exist"
-#    assert len(os.listdir(data_path)) > 0, f"Data path {data_path} has no subfolders"
-#    for folder in os.listdir(data_path):
-#        assert len(os.listdir(os.path.join(data_path, folder))) > 0, f"Folder {folder} is empty"
+N_IMAGES = 6
 
+def test_cub_200_2011_initialization():
+    dataset = CUB200_201(
+        image_dir='./data/CUB_200_2011/images',
+        model_name='resnet50',
+        num_classes=200,
+        download=True
+    )
+    assert isinstance(dataset, Dataset), "Dataset is not an instance of torch.utils.data.Dataset."
+    assert len(dataset) > 0, "Dataset is empty."
+    assert len(dataset) == N_IMAGES, f"Dataset size is {len(dataset)}, expected {N_IMAGES}."
+    assert hasattr(dataset, 'image_paths'), "Dataset is missing the 'image_paths' attribute."
+    assert isinstance(dataset.image_paths, list), "'image_paths' should be a list."
 
-# import os
-# import subprocess
-
-# def test_data():
-#     # Path to the local data directory
-#     data_path = 'data'
-
-#     # first ensure data is pulled from the DVC remote (Google Cloud Storage)
-#     try:
-#         subprocess.run(['dvc', 'pull'], check=True)
-#     except subprocess.CalledProcessError:
-#         raise AssertionError("Failed to pull data using DVC. Ensure your DVC remote is correctly configured.")
-
-#     # verify the local data path exists
-#     assert os.path.exists(data_path), f"Data path {data_path} does not exist locally after pulling"
-
-#     # check if the directory contains subfolders or files
-#     assert len(os.listdir(data_path)) > 0, f"Data path {data_path} is empty after pulling"
-
-#     # verify each subfolder is non-empty
-#     for folder in os.listdir(data_path):
-#         folder_path = os.path.join(data_path, folder)
-#         assert os.path.isdir(folder_path), f"{folder_path} is not a directory"
-#         assert len(os.listdir(folder_path)) > 0, f"Folder {folder} in {data_path} is empty"
-
-# run the datamodule
-
-def test_cub_200_2011_load():
-    """Test the Caltech256 class."""
-    dataset = CUB200_201(image_dir='../data/CUB_200_2011', model_name='resnet50', num_classes=200, download=True)
-    assert isinstance(dataset, Dataset)
-   #assert len(dataset) == N_IMAGES
+def test_cub_200_2011_file_validation():
+    dataset = CUB200_201(
+        image_dir='./data/CUB_200_2011/images',
+        model_name='resnet50',
+        num_classes=200,
+        download=True
+    )
+    dataset.image_paths = [path for path in dataset.image_paths if not path.endswith('README')]
+    for path in dataset.image_paths:
+        assert os.path.exists(path), f"File does not exist: {path}"
+        assert path.lower().endswith(('.jpg', '.jpeg', '.png', '.txt', 'README')), f"Invalid file type: {path}"
