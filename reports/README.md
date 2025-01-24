@@ -320,7 +320,11 @@ We don’t make use of caching, this is something we could do to optimise our wo
 >
 > Answer:
 
---- question 12 fill here ---
+We used Hydra for managing configurations. Hydra simplifies managing hyperparameters and experiment settings through .yaml config files.
+To run an experiment: 
+```bash 
+python train.py lr=1e-3 batch_size=64
+```
 
 ### Question 13
 
