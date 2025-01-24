@@ -12,6 +12,7 @@ from pytorch_lightning import LightningDataModule
 from timm import create_model
 from dataclasses import dataclass
 from fastai.vision.all import *
+from torch.utils.data.distributed import DistributedSampler
 
 
 class CUB200_201(Dataset):
@@ -26,7 +27,7 @@ class CUB200_201(Dataset):
         download: bool = False,
     ) -> None:
         """Initialize dataset."""
-        self.image_dir = Path('../data')
+        self.image_dir = Path('./data')
         self.model_name = model_name
         self.num_classes = num_classes
         self.transform = transform or transforms.Compose([
@@ -40,10 +41,10 @@ class CUB200_201(Dataset):
         # Prepare image paths and labels
         self.image_paths = []
         self.labels = []
-        self.folders = [folder for folder in os.listdir('../data') if os.path.isdir(os.path.join('../data', folder))][:num_classes]
+        self.folders = [folder for folder in os.listdir('./data') if os.path.isdir(os.path.join('./data', folder))][:num_classes]
 
         for idx, folder in enumerate(self.folders):
-            folder_path = os.path.join('../data', folder)
+            folder_path = os.path.join('./data', folder)
             images = os.listdir(folder_path)
             for image in images:
                 image_path = os.path.join(folder_path, image)
@@ -72,7 +73,7 @@ class CUB200_201(Dataset):
 
     def _download(self):
         """Download and prepare the CUB-200-2011 dataset."""
-        data_path = '../data'
+        data_path = './data'
         if os.path.exists(data_path):
             shutil.rmtree(data_path)
 
@@ -108,26 +109,40 @@ class CUB200201DataModule(LightningDataModule):
 
     def setup(self, stage: Optional[str] = None) -> None:
         """Setup datasets."""
-        self.dataset = CUB200_201('../data', self.model_name, self.num_classes, download=self.download)
+        self.dataset = CUB200_201('./data', self.model_name, self.num_classes, download=self.download)
 
     def train_dataloader(self) -> DataLoader:
         """Return train dataloader."""
         if not hasattr(self, 'dataset'):
             self.setup()
-        return DataLoader(self.dataset, batch_size=self.batch_size, shuffle=True)
+        sampler = DistributedSampler(self.dataset) if torch.distributed.is_initialized() else None
+        return DataLoader(
+            self.dataset,
+            batch_size=self.batch_size,
+            shuffle=(sampler is None),
+            sampler=sampler,
+            num_workers=os.cpu_count()
+        )
 
     def val_dataloader(self) -> DataLoader:
         """Return validation dataloader."""
         if not hasattr(self, 'dataset'):
             self.setup()
-        return DataLoader(self.dataset, batch_size=self.batch_size, shuffle=False)
+        sampler = DistributedSampler(self.dataset) if torch.distributed.is_initialized() else None
+        return DataLoader(
+            self.dataset,
+            batch_size=self.batch_size,
+            shuffle=False,
+            sampler=sampler,
+            num_workers=os.cpu_count()
+        )
 
 
 def preprocess_data(image_dir: str, num_classes: int, batch_size: int = 64, download: bool = False) -> None:
     """Preprocess and prepare data for training."""
     # Setup data module
     data_module = CUB200201DataModule(
-        image_dir='../data',
+        image_dir='./data',
         model_name="resnet50",
         num_classes=num_classes,
         batch_size=batch_size,
@@ -137,13 +152,13 @@ def preprocess_data(image_dir: str, num_classes: int, batch_size: int = 64, down
     # Call setup method to initialize the dataset before using dataloaders
     data_module.setup()
 
-    torch.save(data_module.train_dataloader(), os.path.join('../data', 'train_dataloader.pth'))
-    torch.save(data_module.val_dataloader(), os.path.join('../data', 'valid_dataloader.pth'))
+    torch.save(data_module.train_dataloader(), os.path.join('./data', 'train_dataloader.pth'))
+    torch.save(data_module.val_dataloader(), os.path.join('./data', 'valid_dataloader.pth'))
 
 
-def main(image_dir: str = '../data', num_classes: int = 200, batch_size: int = 64, download: bool = False) -> None:
+def main(image_dir: str = '.data', num_classes: int = 200, batch_size: int = 64, download: bool = False) -> None:
     """Main function to preprocess and save dataset."""
-    preprocess_data(image_dir='../data', num_classes=num_classes, batch_size=batch_size, download=download)
+    preprocess_data(image_dir='./data', num_classes=num_classes, batch_size=batch_size, download=download)
 
 
 if __name__ == '__main__':

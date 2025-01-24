@@ -176,9 +176,6 @@ To get a copy of the developments enviroment, you would:
 
 By using this appraoch, we manage to ensure consistency and reproducibility. 
 
-
---- question 4 fill here ---
-
 ### Question 5
 
 > **We expect that you initialized your project using the cookiecutter template. Explain the overall structure of your**
@@ -193,7 +190,7 @@ By using this appraoch, we manage to ensure consistency and reproducibility.
 >
 > Answer:
 
---- question 5 fill here ---
+We unfortunately didn't use the cookiecutter template for our project. However we tried to follow the structure of the template as much as possible. The project structure can be seen in the README.md file in the repository. We have all the same files, except for the visualize.py file, which we didn't need. We also created new files for having an explanability element in the project and a part of our API front end, which is the explanation.py and frontend.py files in the src folder, this creates a saliency map for our frontend. We misnamed the evaluate.py file, and called it test.py file instead.
 
 ### Question 6
 
@@ -208,7 +205,9 @@ By using this appraoch, we manage to ensure consistency and reproducibility.
 >
 > Answer:
 
---- question 6 fill here ---
+We used the Ruff VSCode extension for linting and formatting, ensuring that our code followed consistent style and quality standards. Additionally, a GitHub workflow was set up to validate whether files pushed to the main branch adhered to Ruff formatting rules. If issues were detected, it provided clear suggestions for corrections. For typing, we implemented type annotations in certain files to improve code clarity and reliability, although this was not applied universally. As for documentation, while formal documentation practices were not established, we added comments in critical sections to explain complex logic and key functionalities.
+
+These practices are crucial in larger projects for several reasons. Linting and formatting ensure a consistent codebase, making it easier for multiple contributors to read, understand, and modify the code without introducing unnecessary errors. Typing enhances code reliability by allowing static analysis tools to catch type-related bugs early. Documentation—whether formal or informal—provides essential context, which is especially valuable as projects grow in complexity.
 
 ## Version control
 
@@ -227,7 +226,7 @@ By using this appraoch, we manage to ensure consistency and reproducibility.
 >
 > Answer:
 
---- question 7 fill here ---
+We have implemented 11 distinct tests. We are testing the API using the /predict/ endpoint. We are testing the data, that we initialize the dataloader correctly, and that the dataloader returns the correct number of samples. We are testing that model, that it is correctly loaded, and that we can do a forward pass. We are also testing the metrics, output shape as well as the optimizer and scheduler. We didn't manage for test_api to work in the github actions, but it works locally.
 
 ### Question 8
 
@@ -242,7 +241,11 @@ By using this appraoch, we manage to ensure consistency and reproducibility.
 >
 > Answer:
 
---- question 8 fill here ---
+When we omit the tests in the coverage report, we get a coverage of 83%, this not including code for the whole project but only code for the following files:
+
+![Coverage Report](figures/coverage_report.png)
+
+Many of the files in the repository are untouched from the testing, and the testing we do is fairly simple. Even if we had 100% code coverage, we would not trust our code to be error-free. Code coverage is a metric that indicates the percentage of code that is executed by tests. While high code coverage is a good indicator of test quality, it does not guarantee that the tests are good or that the code is free of errors.
 
 ### Question 9
 
@@ -257,7 +260,7 @@ By using this appraoch, we manage to ensure consistency and reproducibility.
 >
 > Answer:
 
---- question 9 fill here ---
+We made use of both branches and PR in our project. We had a branch for each separate feature or bug fix. When a team member finished working on their branch, they merged their changes to with main. If there were somethings that needed to be fixed or checked a team member would create a pull request, where the other team members could review the changes. Then we would either merge or close the pull request. This workflow helped us to keep the main branch clean and stable, as well as making sure that the code was reviewed by at least one other team member before being merged.
 
 ### Question 10
 
@@ -272,7 +275,7 @@ By using this appraoch, we manage to ensure consistency and reproducibility.
 >
 > Answer:
 
---- question 10 fill here ---
+Yes, we used DVC to manage the dataset efficiently. Specifically, we tracked our dataset (CUB-200-2011) with DVC and stored it in a Google Cloud Storage (GCS) bucket. By using DVC, we were able to version our dataset alongside the codebase. This allowed us to maintain reproducibility and avoided issues caused by outdated datasets. Also, it is considered a bad practice to store the dataset directly on GitHub, and keeping the dataset separate from it reduced the repository size substantially. Lastly, it simplified collaboration, as team members could pull the exact dataset version by simply running `dvc pull`, instead of having to download it manually from another source (e.g. Dropbox). So by using DVC, we improved reproducibility and prevented dataset management headaches.
 
 ### Question 11
 
@@ -289,7 +292,16 @@ By using this appraoch, we manage to ensure consistency and reproducibility.
 >
 > Answer:
 
---- question 11 fill here ---
+For our project we have set up contionous integration to ensure code quality. The continuous integration pipeline consists of unittesting, linting and cloudbuild. 
+- Unittests:
+    - We test all the unittests we have created to verify correctness of our code. The unittests that relates to api are not executed, as we haven’t managed to merge that fully with the GitHub. For all unittests we test on ubuntu and windows using 3 different versions of python.
+        - Initially we wanted to test on macOS, but we encountered several memory constraints during training, and decided to skip it.
+    - For linting, we only run it on ubuntu, we it installs ruff linter. Ruff helps us identify issues like unused imports, incorrect syntax, and style violations.
+    - The cloudbuild plays an essential role in automating our deployment pipeline. It works by generating data using the fastai framework. After generating the nessasary data the cloudbuild proceeds to build a container in the cloud enviorment. This containerization ensures that our project and its dependencies are packaged and isolated, making the environment more reproducible and scalable. When the container is build, we push the container image to the cloud registry.
+
+We don’t make use of caching, this is something we could do to optimise our workflow and make it faster.  
+
+![Github Actions Workflow](figures/github_action.png)
 
 ## Running code and tracking experiments
 
@@ -308,7 +320,11 @@ By using this appraoch, we manage to ensure consistency and reproducibility.
 >
 > Answer:
 
---- question 12 fill here ---
+We used Hydra for managing configurations. Hydra simplifies managing hyperparameters and experiment settings through .yaml config files.
+To run an experiment: 
+```bash 
+python train.py lr=1e-3 batch_size=64
+```
 
 ### Question 13
 
@@ -340,7 +356,18 @@ By using this appraoch, we manage to ensure consistency and reproducibility.
 >
 > Answer:
 
---- question 14 fill here ---
+As seen in image below we have tracked the validation accuracy. The validation accuracy, informs how well the model is able to generalize to unseen examples during training time. This metric is calculated using a separate validation dataset, distinct from the training dataset, which simulates real-world examples the model has not encountered before. It is an important metric to monitor as it can reveal if the model under- or overfits or plateaueing. 
+We want to see an increasing validation accuracy. This means the model performance is improving. A model with high validation accuracy is likely to perform better on unseen test data, indicating good generalization
+If the validation remains consistently low, it may indicate underfitting. This happens when the model is too simple to capture the underlying patterns in the data. 
+If there is a large difference between training and validtaion accuracy, it indicates overfitting. In this case the mdoel can predict training samples very well, but is unable to generalise to the new data instances. 
+![Validation Accuracy](figures/wandb1.png)
+
+We also tracked trainig recall over epochs. Recall measures the models ability to correctly identify all relevant positive instances in the training dataset. In a multiclass scenario, like ours, recall is calculates for each class and than aggragated. 
+This metric, concerns only predictions in the training, it tells us if the model is improving over the training epochs. It is a good metric to monitor, as we want to make sure that performance is improving; this would mean recall is increasing.
+If recall is decrerasing it could indicate overfitting or a poor learning rate. If the recall plateaues, it could mean, the mdoel has learned all that it can from the training data. 
+![Training Recall](figures/wandb2.png)
+
+
 
 ### Question 15
 
@@ -354,8 +381,26 @@ By using this appraoch, we manage to ensure consistency and reproducibility.
 > *training docker image: `docker run trainer:latest lr=1e-3 batch_size=64`. Link to docker file: <weblink>*
 >
 > Answer:
+For our project, we developed several Docker images. Our Project includes images for API, training and Weight and Biases.
 
---- question 15 fill here ---
+**Training image**:  This container is used for model training. The Dockerfile installs essential libraries, copies the source code and data, and sets the working directory for training execution. For example, to run the training container:
+
+```bash
+docker run trainer:latest lr=1e-3 batch_size=64
+```
+
+**API image**:  The API container is used for eploying the FastAPI backend, which acts as an inference gateway in out project. The Dockerfile sets up the FastAPI application, including installing dependencies and configuring the uvicorn server. To run the API container:
+```bash
+docker run -p 8000:8000 api:latest
+```
+
+**WandB image**: The WandB container is dedicated to testing and integrating with Weights & Biases for logging metrics, tracking experiments and parameter sweeps. The Dockerfile sets up the W&B logging environment, including dependencies and configurations, and executes the wandb_tester.py script to validate logging workflows. To run the W&B container:
+
+```bash
+docker run wandb:latest
+```
+
+Here is a link to the training dockerfile: <https://github.com/karlfindhansen/MLOps_Jan2025/blob/main/dockerfiles/train.dockerfile>*. 
 
 ### Question 16
 
@@ -387,7 +432,13 @@ By using this appraoch, we manage to ensure consistency and reproducibility.
 >
 > Answer:
 
---- question 17 fill here ---
+1. Compute
+		Google Cloud's Compute service is used to obtain computing resources to run applications, including virtual machines (VMs) 		which we use to train out model and containers which we used to run our app.
+2. Storage
+		Google Cloud's Storage service offers scalable and secure storage and we used this for our training data, as well as storing 		our trained model and docker images.
+3. AI/ML
+		Google Cloud's AI/ML services are tools for building and deploying machine learning models. We used this service with vertex 		AI which we use to both train and deploy our for model to the buckets.
+
 
 ### Question 18
 
@@ -402,7 +453,8 @@ By using this appraoch, we manage to ensure consistency and reproducibility.
 >
 > Answer:
 
---- question 18 fill here ---
+In this project, we used Vertex AI from Google Cloud to train our model. Compute Engine is the part of Google Cloud that helps us run virtual machines (VMs). Even though our model and dataset are small, Vertex AI automatically takes care of creating and managing the VMs for us. The VMs used were mainly CPU instances, which we chose to save on ressources and money and because of the simple model and dataset, this was sufficient. This setup lets us focus on training the model, while Vertex AI handles everything behind the scenes, like choosing and managing the VMs. This made the training process easier and faster without needing to manually set up or monitor the VMs.
+
 
 ### Question 19
 
@@ -411,7 +463,7 @@ By using this appraoch, we manage to ensure consistency and reproducibility.
 >
 > Answer:
 
---- question 19 fill here ---
+[image of buceket](reports/figures/Buckets_overview.png).**
 
 ### Question 20
 
@@ -420,7 +472,7 @@ By using this appraoch, we manage to ensure consistency and reproducibility.
 >
 > Answer:
 
---- question 20 fill here ---
+[image of artifact registry](reports/figures/artifact_register.png).**
 
 ### Question 21
 
@@ -429,7 +481,8 @@ By using this appraoch, we manage to ensure consistency and reproducibility.
 >
 > Answer:
 
---- question 21 fill here ---
+[image of Cloud build history](reports/reports/figures/Cloud_build_history.png).**
+
 
 ### Question 22
 
@@ -444,7 +497,13 @@ By using this appraoch, we manage to ensure consistency and reproducibility.
 >
 > Answer:
 
---- question 22 fill here ---
+We used Vertex AI to train the model in the cloud to make the training simpler and to avoid managing the VM. We did this by first we set up the training proces to run locally while using the dataset we uploaded to the google cloud bucket. Modified the code to save the model to our model bucket after training. After confirming the process run worked locally, we built a docker image with the training process as entrypoint and uploaded this to the google artifact registry. Then we created a config file to specify some parameters and the docker image to be used. Then we can the whole process with vertex ai which spun up a VM to run it, by typing a command like:
+gcloud ai custom-jobs create \
+  --region=us-central1 \
+  --display-name=your-job-name \
+  --python-package-uris=gs://your-bucket-id/path/to/package.tar.gz \
+  --python-module=your_training_script.train \
+  --worker-pool-spec=machine-type=n1-standard-4,replica-count=1,python-package=your-package-uri
 
 ## Deployment
 
@@ -461,7 +520,7 @@ By using this appraoch, we manage to ensure consistency and reproducibility.
 >
 > Answer:
 
---- question 23 fill here ---
+We managed to write an API for our model, we used FastAPI to do it. We had some problems locating the blob and bucket in google cloud storage, once this got fixed we made a prediction function in the backend.py file, that takes an image, which we upload through the frontend. Then it uses the model, which is trained on the cloud to make a prediction and a saliency map of the image. For us to be able to do this, we had to set up the local google cloud enviornment on our computers and make a local variable with the bucket, this allowed us to access and connect to google cloud.
 
 ### Question 24
 
@@ -559,7 +618,40 @@ By using this appraoch, we manage to ensure consistency and reproducibility.
 >
 > Answer:
 
---- question 29 fill here ---
+![Diagram of our project](figures/diagram.png)
+
+The diagram illustrates the project in three tiers: 
+
+**At the first level, a user or developer interacts with the system.**
+
+- A user will use the system by uploading an image an interactive interface. In this way the user interacts with our frontend application which is developed with Streamlit. 
+- A developer can interact with the project by cloning the source code on GitHub. 
+
+**The second level illustrates the frontend tool.**
+
+- When a user uploads an image, Streamlit communicates with FastAPI, which acts as a gateway to the backend. The image is processed, and FastAPI returns the result (bird species prediction) to the user through the interface. 
+- To make the predictions FastAPI fetches a pre-trained model (fine-tuned ResNet) hosted in the backend, to classify the uploaded image
+- For developers, when the system is running, the newest Docker image is pulled to ensure the latest backend version is used. All dependencies required by FastAPI are encapsulated within the Docker container, ensuring portability and consistency.
+- FastAPI connects to Google Cloud to fetch the model for classification. 
+- Google Cloud SDK is used to push the Docker container to the cloud. 
+
+**The third level illustrates the backend**
+
+- The backend contains a training pipeline, witch is optimized with Pytorch Lightning. 
+
+- The training process is logged using WeightAndBiases and Hydra. 
+
+- The training pipeline fecthes data from DVC. 
+
+- The trained model is saved in Google Cloud. 
+
+- We also integrated several tests; testing both the training process and data loading in GitHub Actions.
+
+- When a developer commits changed to the repository a GitHub Actions workflow is triggered.
+
+- For the tests to run, Github Actions fetches the model and data using DVC. 
+
+
 
 ### Question 30
 
@@ -578,17 +670,5 @@ By using this appraoch, we manage to ensure consistency and reproducibility.
 ### Question 31
 
 > **State the individual contributions of each team member. This is required information from DTU, because we need to**
-> **make sure all members contributed actively to the project. Additionally, state if/how you have used generative AI**
-> **tools in your project.**
->
-> Recommended answer length: 50-300 words.
->
-> Example:
-> *Student sXXXXXX was in charge of developing of setting up the initial cookie cutter project and developing of the*
-> *docker containers for training our applications.*
-> *Student sXXXXXX was in charge of training our models in the cloud and deploying them afterwards.*
-> *All members contributed to code by...*
-> *We have used ChatGPT to help debug our code. Additionally, we used GitHub Copilot to help write some of our code.*
-> Answer:
-
---- question 31 fill here ---
+> **make sure all members contributed actively to the project. Additionally, state if/how you have used generative AI tools in your project.**
+>**Recommended answer length: 50-300 words.**

@@ -10,3 +10,8 @@ dvc[gs]
 fastai==2.7.18
 fastapi==0.115.6
 httpx==0.28.1
+functions-framework==3.*
+uvicorn==0.34
+Pillow==10.4.0
+google-cloud==0.34.0
+
