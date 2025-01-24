@@ -376,8 +376,26 @@ If recall is decrerasing it could indicate overfitting or a poor learning rate. 
 > *training docker image: `docker run trainer:latest lr=1e-3 batch_size=64`. Link to docker file: <weblink>*
 >
 > Answer:
+For our project, we developed several Docker images. Our Project includes images for API, training and Weight and Biases.
 
---- question 15 fill here ---
+**Training image**:  This container is used for model training. The Dockerfile installs essential libraries, copies the source code and data, and sets the working directory for training execution. For example, to run the training container:
+
+```bash
+docker run trainer:latest lr=1e-3 batch_size=64
+```
+
+**API image**:  The API container is used for eploying the FastAPI backend, which acts as an inference gateway in out project. The Dockerfile sets up the FastAPI application, including installing dependencies and configuring the uvicorn server. To run the API container:
+```bash
+docker run -p 8000:8000 api:latest
+```
+
+**WandB image**: The WandB container is dedicated to testing and integrating with Weights & Biases for logging metrics, tracking experiments and parameter sweeps. The Dockerfile sets up the W&B logging environment, including dependencies and configurations, and executes the wandb_tester.py script to validate logging workflows. To run the W&B container:
+
+```bash
+docker run wandb:latest
+```
+
+Here is a link to the training dockerfile: <https://github.com/karlfindhansen/MLOps_Jan2025/blob/main/dockerfiles/train.dockerfile>*. 
 
 ### Question 16
 
