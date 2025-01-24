@@ -193,6 +193,8 @@ By using this appraoch, we manage to ensure consistency and reproducibility.
 >
 > Answer:
 
+We unfortunately didn't use the cookiecutter template for our project. However we tried to follow the structure of the template as much as possible. The project structure can be seen in the README.md file in the repository. We have all the same files, except for the visualize.py file, which we didn't need. We also created new files for having an explanability element in the project and a part of our API front end, which is the explanation.py and frontend.py files in the src folder, this creates a saliency map for our frontend. We misnamed the evaluate.py file, and called it test.py file instead.
+
 --- question 5 fill here ---
 
 ### Question 6
@@ -578,17 +580,4 @@ By using this appraoch, we manage to ensure consistency and reproducibility.
 ### Question 31
 
 > **State the individual contributions of each team member. This is required information from DTU, because we need to**
-> **make sure all members contributed actively to the project. Additionally, state if/how you have used generative AI**
-> **tools in your project.**
->
-> Recommended answer length: 50-300 words.
->
-> Example:
-> *Student sXXXXXX was in charge of developing of setting up the initial cookie cutter project and developing of the*
-> *docker containers for training our applications.*
-> *Student sXXXXXX was in charge of training our models in the cloud and deploying them afterwards.*
-> *All members contributed to code by...*
-> *We have used ChatGPT to help debug our code. Additionally, we used GitHub Copilot to help write some of our code.*
-> Answer:
-
---- question 31 fill here ---
+> **make sure all members contributed actively to the project. Additionally,
