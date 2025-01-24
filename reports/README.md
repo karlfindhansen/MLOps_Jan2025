@@ -516,7 +516,7 @@ gcloud ai custom-jobs create \
 >
 > Answer:
 
---- question 23 fill here ---
+We managed to write an API for our model, we used FastAPI to do it. We had some problems locating the blob and bucket in google cloud storage, once this got fixed we made a prediction function in the backend.py file, that takes an image, which we upload through the frontend. Then it uses the model, which is trained on the cloud to make a prediction and a saliency map of the image. For us to be able to do this, we had to set up the local google cloud enviornment on our computers and make a local variable with the bucket, this allowed us to access and connect to google cloud.
 
 ### Question 24
 
