@@ -339,11 +339,11 @@ python train.py hyperparameters
 >
 > Answer:
 
-We ensured the reproducibility of experiments by using Hydra for configuration management and and Weights & Biases (W&B) for logging experiment metadata and results.
+We ensured the reproducibility of experiments by using Hydra for configuration management and and Weights & Biases (WandB) for logging experiment metadata and results.
 
 When an experiment is run, the following happens: 
 - Hydra dynamically manages hyperparameters and settings through the YAML config files.
-- W&B automatically logs experiment results, including metrics, configuration parameters, and training progress. Each experiment is assigned a unique run ID for tracking. 
+- WandB automatically logs experiment results, including metrics, configuration parameters, and training progress. Each experiment is assigned a unique run ID for tracking. 
 
 ### Question 14
 
@@ -398,7 +398,7 @@ docker run trainer:latest lr=1e-3 batch_size=64
 docker run -p 8000:8000 api:latest
 ```
 
-**WandB image**: The WandB container is dedicated to testing and integrating with Weights & Biases for logging metrics, tracking experiments and parameter sweeps. The Dockerfile sets up the W&B logging environment, including dependencies and configurations, and executes the wandb_tester.py script to validate logging workflows. To run the W&B container:
+**WandB image**: The WandB container is dedicated to testing and integrating with Weights & Biases for logging metrics, tracking experiments and parameter sweeps. The Dockerfile sets up the WandB logging environment, including dependencies and configurations, and executes the wandb_tester.py script to validate logging workflows. To run the WandB container:
 
 ```bash
 docker run wandb:latest
@@ -687,9 +687,13 @@ The diagram illustrates the project in three tiers:
 >
 > Answer:
 
-We used a variety of tools like Hydra for configuration, DVC for data, and Weights & Biases for logging. It was challenging to make these tools work well together. For example, configuring DVC to handle large datasets while syncing with GitHub Actions was difficult. To overcome this, we had to do research, read documentation, and learn how to add the needed dependencies in the training pipeline configurations. 
+- We used a variety of tools like Hydra for configuration, DVC for data, and Weights & Biases for logging. It was challenging to make these tools work well together. For example, configuring DVC to handle large datasets while syncing with GitHub Actions was difficult. To overcome this, we had to do research, read documentation, and learn how to add the needed dependencies in the training pipeline configurations. 
 
-Most group members were new to using Docker, it therefor required some effort from all of us, to get used to the framework. This has been a good learning experience. 
+- Most group members were new to using Docker, it therefor required some effort from all of us, to get used to the framework. This has been a good learning experience. 
+
+- Using the Dockerized FastAPI backend to Google Cloud also posed a challenge. All group members had worked on Google cloud before, but we are not super routined. Setting up the Google Cloud SDK and configuring the container registry was challenging. We overcame this by working through the Google Cloud documentation and helpfull googeling. 
+
+- Debugging errors during model training and inference was (of course) also a challenge. Bugs often appeared when we were running experiments on different systems. To overcome the challenges and fix the bugs, we wrote unit testing and logging to identify the issues. 
 
 
 ### Question 31
@@ -708,7 +712,7 @@ Most group members were new to using Docker, it therefor required some effort fr
 
 - Student s243345 contributed by implementing a linting workflow, adding explainability with saliency maps, setting up wandb sweeps for hyperparameter optimization, integrating Hydra with wandb and Pytorch Lightning, and establishing DVC with a GCP Bucket.
 
-- Student s204674 contributed by working on the logging pipeline to track experiment results and performance metrics, specifically using WandB. Configured W&B to log hyperparameters, training/validation loss, accuracy, and model checkpoints. Moreover worked on testing, and integrating Github Actions with DVC. 
+- Student s204674 contributed by working on the logging pipeline to track experiment results and performance metrics, specifically using WandB. Configured WandB to log hyperparameters, training/validation loss, accuracy, and model checkpoints. Moreover worked on testing, and integrating Github Actions with DVC. 
 
 - Student s193624 contributed by creating the setup for the classification model, hereby providing basic setup for the structure of the repository. Worked on docker, github actions and testing. Setting up the API. Setting up pre-commit and getting cloudbuild to work with the model. 
 - All members contributed to code by...
