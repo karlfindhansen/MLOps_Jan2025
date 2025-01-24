@@ -292,7 +292,15 @@ Yes, we used DVC to manage the dataset efficiently. Specifically, we tracked our
 >
 > Answer:
 
---- question 11 fill here ---
+For our project we have set up contionous integration to ensure code quality. The continuous integration pipeline consists of unittesting, linting and cloudbuild. 
+- Unittests:
+    - We test all the unittests we have created to verify correctness of our code. The unittests that relates to api are not executed, as we haven’t managed to merge that fully with the GitHub. For all unittests we test on ubuntu and windows using 3 different versions of python.
+        - Initially we wanted to test on macOS, but we encountered several memory constraints during training, and decided to skip it.
+    - For linting, we only run it on ubuntu, we it installs ruff linter. Ruff helps us identify issues like unused imports, incorrect syntax, and style violations.
+    - The cloudbuild plays an essential role in automating our deployment pipeline. It works by generating data using the fastai framework. After generating the nessasary data the cloudbuild proceeds to build a container in the cloud enviorment. This containerization ensures that our project and its dependencies are packaged and isolated, making the environment more reproducible and scalable. When the container is build, we push the container image to the cloud registry.
+
+We don’t make use of caching, this is something we could do to optimise our workflow and make it faster.  
+
 
 ## Running code and tracking experiments
 
