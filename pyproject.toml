@@ -78,3 +78,6 @@ arange = "arange"
 [tool.typos.default.extend-words]
 Ue = "Ue"
 Hashi = "Hashi"
+
+[tool.coverage.run]
+omit = ["tests/*"]

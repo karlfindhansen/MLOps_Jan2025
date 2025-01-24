@@ -241,6 +241,22 @@ These practices are crucial in larger projects for several reasons. Linting and 
 >
 > Answer:
 
+When we omit the tests in the coverage report, we get a coverage of 83%, this not including code for the whole project but only code for the following files:
+
+'''
+Name              Stmts   Miss  Cover
+-------------------------------------
+src/__init__.py       0      0   100%
+src/api.py           38      3    92%
+src/datasets.py      83     20    76%
+src/model.py         51      6    88%
+-------------------------------------
+TOTAL               172     29    83%
+'''
+
+Many of the files in the repository are untouched from the testing, and the testing we do is fairly simple. Even if we had 100% code coverage, we would not trust our code to be error-free. Code coverage is a metric that indicates the percentage of code that is executed by tests. While high code coverage is a good indicator of test quality, it does not guarantee that the tests are good or that the code is free of errors.
+
+
 --- question 8 fill here ---
 
 ### Question 9
