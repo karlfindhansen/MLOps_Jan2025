@@ -707,7 +707,7 @@ The diagram illustrates the project in three tiers:
 
 - Student s204674 contributed by working on the logging pipeline to track experiment results and performance metrics, specifically using WandB. Configured W&B to log hyperparameters, training/validation loss, accuracy, and model checkpoints. Moreover worked on testing, and integrating Github Actions with DVC. 
 
-- Student sXXXXXX contributed by...
+- Student s193624 contributed by creating the setup for the classification model, hereby providing basic setup for the structure of the repository. Worked on docker, github actions and testing. Setting up the API. Setting up pre-commit and getting cloudbuild to work with the model. 
 - All members contributed to code by...
 
 We have used ChatGPT to assist in debugging our code, resolving specific issues, and clarifying concepts related to our implementation. We also used this AI tool to refine the wording of some parts of this report.
