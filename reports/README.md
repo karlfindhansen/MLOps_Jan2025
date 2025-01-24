@@ -143,7 +143,7 @@ s193624, s204748, s243345, s204674, s205336
 >
 > Answer:
 
-We used the third-party framework `timm` in our project. The `create_model` function from this package allowed us to load a pretrained ResNet50 backbone, which we fine-tuned on our dataset for bird classification. Using a pretrained model helped us save time while improving performance, as the model had already learned features from a large dataset, providing a stronger starting point than training from scratch. This popular framework made it easy to work with state-of-the-art models like the one we chose and adapt it to our specific needs, greatly simplifying the process of setting up the model architecture.
+We have used the third-party framework `timm` in our project. The `create_model` function from this package allowed us to load a pretrained ResNet50 backbone model. We have fine-tuned the model on our dataset for bird classification. Using a pretrained model helped us save time while improving performance, as the model had already learned features from a large dataset, providing a stronger starting point than training from scratch. This popular framework made it easy to work with state-of-the-art models like the one we chose and adapt it to our specific needs, greatly simplifying the process of setting up the model architecture.
 
 ## Coding environment
 
@@ -604,7 +604,7 @@ Using monitoring, we could set up alerts, to notify us when something goes wrong
 >
 > Answer:
 
-In the project we used a total of $2.32 credits. The most expensive service by a large margin was Container Registry Vulnerability Scanning, costing $1.82 probably due to the fact that this service was used the most. These scans have higher costs on the size and number of images being analyzed and we have some fairly large and multiple images. Overall, working in the cloud was fairly easy and efficient and flexible, but not fit for a project of this size. For larger project the real benefits will show.
+During the project, we used a total of USD 2.32 in credits. The most expensive service was Container Registry Vulnerability Scanning, which cost USD 1.82. This high expense was likely because we used the service a lot, with higher costs because ofthe size and number of image files analyzed. Our project involved fairly large and multiple image files, which definitely contributed to the cost. Overall, working in the cloud was easy, smooth, efficient, and flexible. However, it may not be the most suitable solution for smaller projects like ours. The true advantages of cloud computing are more apparent in larger-scale projects, where its scalability and efficiency brings greater value.
 
 
 ### Question 28
