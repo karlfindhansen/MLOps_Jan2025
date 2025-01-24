@@ -190,7 +190,7 @@ By using this appraoch, we manage to ensure consistency and reproducibility.
 >
 > Answer:
 
-We unfortunately didn't use the cookiecutter template for our project. However we tried to follow the structure of the template as much as possible. The project structure can be seen in the README.md file in the repository. We have all the same files, except for the visualize.py file, which we didn't need. We also created new files for having an explanability element in the project and a part of our API front end, which is the explanation.py and frontend.py files in the src folder, this creates a saliency map for our frontend. We misnamed the evaluate.py file, and called it test.py file instead.
+We unfortunately didn't use the cookiecutter template for our project. However we tried to follow the structure of the template as much as possible. The project structure can be seen in the README.md file in the repository. We have all the same files, except for the visualize.py file, which we didn't need. We also created new files for having an explanability element in the project and a part of our API front end, which is the explanation.py and frontend.py files in the src folder, this creates a saliency map for our frontend. We misnamed the evaluate.py file, and called it test.py file instead. Also, in our project, the file typically referred to as data.py is instead named datasets.py.
 
 ### Question 6
 
