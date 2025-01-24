@@ -8,8 +8,6 @@ import timm
 import torch
 from google.cloud import run_v2
 from PIL import Image
-
-from config import NUM_CLASSES
 from explainability import compute_gradcam, overlay_gradcam_on_image
 
 
@@ -50,7 +48,7 @@ def classify_image(image, backend):
 
 
 def main() -> None:
-    num_classes = NUM_CLASSES
+    num_classes = 5
 
     backend = get_backend_url()
     if backend is None:
