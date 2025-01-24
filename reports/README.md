@@ -325,6 +325,7 @@ To run an experiment:
 ```bash 
 python train.py hyperparameters
 ```
+Furthermore, we used configuration files to set environment variables to keep model parameters etc. consistent so different runs don't give different resutlts based on parameters that was thought to be unchanged.
 
 ### Question 13
 
