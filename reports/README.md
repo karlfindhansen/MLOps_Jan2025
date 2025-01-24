@@ -540,7 +540,13 @@ We managed to write an API for our model, we used FastAPI to do it. We had some 
 >
 > Answer:
 
---- question 24 fill here ---
+We managed to deploy our API, we were able to access it in Python using FastAPI using our backend.py file. We first tried as tested it locally which gave good results, and we were able to get predictions from the API. Afterwards we applied to google cloud service. To invoke the service in the cloud, we use a curl command to send an HTTP POST request with the image or data file.
+
+‘’’bash
+ curl -X POST -F "file=@file.json" <keen-defender-448412-p6@appspot.gserviceaccount.com>
+‘’’
+
+Where the json file is that was generated from google cloud service. The model processes the file and returns predictions through the API.
 
 ### Question 25
 
