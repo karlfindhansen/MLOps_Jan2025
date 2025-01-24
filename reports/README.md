@@ -402,7 +402,13 @@ Yes, we used DVC to manage the dataset efficiently. Specifically, we tracked our
 >
 > Answer:
 
---- question 17 fill here ---
+1. Compute
+		Google Cloud's Compute service is used to obtain computing resources to run applications, including virtual machines (VMs) 		which we use to train out model and containers which we used to run our app.
+2. Storage
+		Google Cloud's Storage service offers scalable and secure storage and we used this for our training data, as well as storing 		our trained model and docker images.
+3. AI/ML
+		Google Cloud's AI/ML services are tools for building and deploying machine learning models. We used this service with vertex 		AI which we use to both train and deploy our for model to the buckets.
+
 
 ### Question 18
 
