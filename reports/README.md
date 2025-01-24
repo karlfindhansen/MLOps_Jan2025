@@ -595,7 +595,8 @@ In the API test we test for:
 >
 > Answer:
 
---- question 27 fill here ---
+In the project we used a total of $2.32 credits. The most expensive service by a large margin was Container Registry Vulnerability Scanning, costing $1.82 probably due to the fact that this service was used the most. These scans have higher costs on the size and number of images being analyzed and we have some fairly large and multiple images. Overall, working in the cloud was fairly easy and efficient and flexible, but not fit for a project of this size. For larger project the real benefits will show.
+
 
 ### Question 28
 
