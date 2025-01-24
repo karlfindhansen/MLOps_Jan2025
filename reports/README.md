@@ -704,6 +704,9 @@ The diagram illustrates the project in three tiers:
 > Answer:
 
 - Student s243345 contributed by implementing a linting workflow, adding explainability with saliency maps, setting up wandb sweeps for hyperparameter optimization, integrating Hydra with wandb and Pytorch Lightning, and establishing DVC with a GCP Bucket.
+
+- Student s204674 contributed by working on the logging pipeline to track experiment results and performance metrics, specifically using WandB. Configured W&B to log hyperparameters, training/validation loss, accuracy, and model checkpoints. Moreover worked on testing, and integrating Github Actions with DVC. 
+
 - Student sXXXXXX contributed by...
 - All members contributed to code by...
 
