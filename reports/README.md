@@ -343,8 +343,8 @@ Furthermore, we used configuration files to set environment variables to keep mo
 We ensured the reproducibility of experiments by using Hydra for configuration management and and Weights & Biases (WandB) for logging experiment metadata and results.
 
 When an experiment is run, the following happens: 
-- Hydra dynamically manages hyperparameters and settings through the YAML config files.
-- WandB automatically logs experiment results, including metrics, configuration parameters, and training progress. Each experiment is assigned a unique run ID for tracking. 
+- Hydra dynamically manages hyperparameters and settings through the YAML config files. It enables flexible experimentation by allowing us to easily modify configurations without changing the code. This makes it easier to experiment with various set ups.
+- WandB automatically logs experiment results, including metrics, configuration parameters, and training progress. Each experiment is assigned a unique ID, making it easy to track and reproduce results. Additionally WandB provides visualizations to compare experiments and identify trends. 
 
 ### Question 14
 
