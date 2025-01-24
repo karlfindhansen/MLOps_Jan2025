@@ -417,7 +417,7 @@ In this project, we used Vertex AI from Google Cloud to train our model. Compute
 >
 > Answer:
 
---- question 19 fill here ---
+[image of buceket](reports/figures/Buckets overview.png).**
 
 ### Question 20
 
