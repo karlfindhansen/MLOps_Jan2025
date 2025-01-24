@@ -15,7 +15,6 @@ WORKDIR /app
 COPY src/requirements_frontend.txt /app/requirements_frontend.txt
 COPY src/frontend.py /app/frontend.py
 COPY src/explainability.py /app/explainability.py
-COPY src src
 COPY src/config /app/config
 COPY pyproject.toml pyproject.toml
 COPY requirements.txt requirements.txt
@@ -26,4 +25,5 @@ RUN --mount=type=cache,target=/root/.cache/pip pip install -r requirements_front
 
 
 EXPOSE $PORT
-CMD exec uvicorn --port $PORT --host 0.0.0.0 frontend:app
+
+ENTRYPOINT ["streamlit", "run", "frontend.py", "--server.port", "$PORT", "--server.address=0.0.0.0"]
